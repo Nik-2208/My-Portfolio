@@ -44,7 +44,17 @@ Built to be interactive, smooth, and modern.
 ## 📁 Project Setup
 
 ```bash
-git clone https://github.com/your-username/nik-portfolio.git
-cd nik-portfolio
+git clone https://github.com/Nik-2208/My-Portfolio.git
 npm install
 npm run dev
+
+
+
+📬 Contact
+Email: nikhileshchavdawork@gmail.com
+GitHub: https://github.com/Nik-2208
+LinkedIn: https://www.linkedin.com/in/nikhilesh-chavda-2b779533a/
+
+⭐ Note
+
+This portfolio is continuously improving as I learn and build more.
