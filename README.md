@@ -41,6 +41,15 @@ Built to be interactive, smooth, and modern.
 
 ---
 
+
+## 📬 Contact
+Email: nikhileshchavdawork@gmail.com
+GitHub: https://github.com/Nik-2208
+LinkedIn: https://www.linkedin.com/in/nikhilesh-chavda-2b779533a/
+
+## ⭐ Note
+
+This portfolio is continuously improving as I learn and build more.
 ## 📁 Project Setup
 
 ```bash
@@ -49,12 +58,3 @@ npm install
 npm run dev
 
 
-
-📬 Contact
-Email: nikhileshchavdawork@gmail.com
-GitHub: https://github.com/Nik-2208
-LinkedIn: https://www.linkedin.com/in/nikhilesh-chavda-2b779533a/
-
-⭐ Note
-
-This portfolio is continuously improving as I learn and build more.
