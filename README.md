@@ -1,4 +1,4 @@
-# 🚀 Nik Portfolio
+# 🚀 Nik's Portfolio
 
 This is my personal portfolio showcasing my projects, skills, internships, and achievements in AI/ML and tech.
 
