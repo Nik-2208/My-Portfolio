@@ -1,46 +1,67 @@
 import { NextRequest, NextResponse } from 'next/server';
-import OpenAI from 'openai';
-import { knowledgeBase } from '../../../lib/knowledge';
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY!,
-});
+const keywordResponses: Record<string, string> = {
+  // Skills
+  'skill': 'Core skills: Python, Java, C/C++, SQL, ML (Scikit-learn, Pandas, NumPy), Streamlit, Django, Firebase, MySQL.',
+  'skills': 'Programming: Python, Java, C/C++, JS. ML: Scikit-learn, Pandas, NLP, TF-IDF. Deployment: Streamlit, Docker. See SkillsMatrix section!',
+  'python': 'Python expert - ML models, Streamlit apps, NLP, data analysis, automation.',
+  'ml': 'Machine Learning: KNN, Logistic Regression, Naive Bayes, recommendation systems, AQI prediction.',
+  'ai': 'AI/ML specialist - predictive models, NIDS, resume analyzer, recipe predictor.',
+  'machine learning': 'Built NIDS, Resume Analyzer, Recipe Predictor, AQI Dashboard using Scikit-learn & Streamlit.',
+
+  // Experience
+  'experience': 'Cybersecurity Intern (Edunet/VOIS), LMS Admin (KJSAC), Hardware Intern (KJSIT).',
+  'worked': 'Current: Cybersecurity AI Intern. Past: LMS Admin & E-Content (50+ videos), Hardware Engineer.',
+  'intern': '1. Cybersecurity with GenAI (Edunet/VOIS) 2. LMS Admin (KJSAC) 3. Hardware Engineer (KJSIT).',
+  'cybersecurity': 'Edunet/VOIS Intern: Wireshark analysis, keylogger project, AI monitoring workflows.',
+
+  // Projects
+  'project': 'AI NIDS, Resume Analyzer, Recipe Predictor, Smart AQI, Learning Dashboard - all Python/Streamlit.',
+  'nids': 'AI Network Intrusion Detection - ML models detect suspicious traffic (20% accuracy boost).',
+  'resume': 'AI Resume Analyzer - parses PDF/images, extracts skills, predicts roles.',
+  'recipe': 'Recipe Predictor - TF-IDF + Naive Bayes predicts cuisine from ingredients.',
+  'aqi': 'Smart AQI Predictor - forecasts pollution levels, interactive dashboard.',
+
+  // Education/Certs
+  'education': 'Diploma Computer Engineering, KJ Somaiya Polytechnic (95.5% Sem 5).',
+  'cert': 'IBM ML Python, Coursera Data Analysis, Microsoft AI-900, Deloitte/BCG/Tata GenAI certs.',
+  'college': 'KJ Somaiya Polytechnic - Diploma Computer Engineering.',
+
+  // Contact
+  'contact': 'nikhileshchavdawork@gmail.com | +91 8928027482 | LinkedIn & GitHub in footer.',
+  'email': 'nikhileshchavdawork@gmail.com',
+  'phone': '+91 8928027482',
+
+  // Default
+  default: "🧠 Nik AI active. Try: skills, projects, experience, education, contact, certifications!"
+};
 
 export async function POST(request: NextRequest) {
   try {
     const { message } = await request.json();
 
-    if (!message) {
-      return NextResponse.json({ error: 'No message provided' }, { status: 400 });
+    if (!message || typeof message !== 'string') {
+      return NextResponse.json({ response: 'Send a message about my portfolio!' }, { status: 400 });
     }
 
-    const context = knowledgeBase.map(chunk => `${chunk.section}: ${chunk.content}`).join('\\n\\n');
+    const lowerMessage = message.toLowerCase().trim();
     
-    const prompt = `You are Nik AI, a portfolio assistant for Nikhilesh Chavda. Answer ONLY using the context below. Be concise, confident, professional.
+    // Keyword matching (first match wins)
+    let matchedKey = 'default';
+    for (const [key, response] of Object.entries(keywordResponses)) {
+      if (key !== 'default' && lowerMessage.includes(key)) {
+        matchedKey = key;
+        break;
+      }
+    }
 
-CONTEXT:
-${context}
-
-User: ${message}
-
-Response:`;
-
-    const completion = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: [
-        { role: "system", content: "You are Nik AI - specialized in Nikhilesh Chavda's portfolio only. Use ONLY provided context. No hallucination. Concise answers." },
-        { role: "user", content: prompt }
-      ],
-      max_tokens: 250,
-      temperature: 0.1,
-    });
-
-    const response = completion.choices[0]?.message?.content || "I focus on Nik's portfolio. Try asking about skills, projects, or experience.";
+    const response = keywordResponses[matchedKey];
 
     return NextResponse.json({ response });
   } catch (error) {
     console.error('Chat API error:', error);
     return NextResponse.json({ 
-      response: "AI core active but experiencing high load. Fallback: Nik specializes in AI/ML (Python/Streamlit), cybersecurity, and full-stack development." 
+      response: 'Neural network operational. Try keywords like skills, projects, experience.' 
     });
   }
+}
