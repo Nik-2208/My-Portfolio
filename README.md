@@ -3,8 +3,7 @@
 This is my personal portfolio showcasing my projects, skills, internships, and achievements in AI/ML and tech.
 
 ## 🌐 Live Demo
-(Deploy link here if available)
-
+https://nik-portfolio-lime.vercel.app/
 ---
 
 ## 📌 About
