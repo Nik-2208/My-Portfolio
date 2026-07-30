@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useRef, useEffect, useState } from "react";
+import React from "react";
+import { motion } from "framer-motion";
 import { Award, CheckCircle, ShieldCheck, Cpu, Database, Cloud } from "lucide-react";
 
 const IconMap = {
@@ -13,11 +14,9 @@ const IconMap = {
 } as const;
 
 type IconKey = keyof typeof IconMap;
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const certifications = [
-{ name: "Machine Learning with Python", issuer: "IBM", icon: "Cpu" as IconKey, color: "#00ffff" },
+  { name: "Machine Learning with Python", issuer: "IBM", icon: "Cpu" as IconKey, color: "#00ffff" },
   { name: "Azure AI-900", issuer: "Microsoft", icon: "Cloud" as IconKey, color: "#0066ff" },
   { name: "Python for Data Analysis", issuer: "Coursera", icon: "Database" as IconKey, color: "#33cc33" },
   { name: "Django Web Apps", issuer: "Skillsoft", icon: "ShieldCheck" as IconKey, color: "#9933ff" },
@@ -30,49 +29,16 @@ const certifications = [
 ];
 
 export default function CertificationsSection() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
-  const [isInView, setIsInView] = useState(false);
-
-  useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !isInView) {
-          setIsInView(true);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (containerRef.current) {
-      observer.observe(containerRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, [isInView]);
-
-  useEffect(() => {
-    if (!isInView || !containerRef.current) return;
-
-    gsap.fromTo(itemsRef.current,
-      { opacity: 0, scale: 0.9, y: 20 },
-      { 
-        opacity: 1, 
-        scale: 1,
-        y: 0, 
-        duration: 0.4, 
-        stagger: 0.05,
-        ease: "power2.out"
-      }
-    );
-  }, [isInView]);
-
   return (
-    <section ref={containerRef} id="certifications" className="relative py-24 md:py-32 bg-black z-20">
+    <section id="certifications" className="relative py-24 md:py-32 bg-black z-20 overflow-hidden">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16 md:mb-20">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, margin: "-50px" }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16 md:mb-20"
+        >
           <div className="flex items-center justify-center gap-3 mb-4">
             <Award className="w-6 md:w-8 h-6 md:h-8 text-blue-400" />
             <span className="text-blue-400 text-xs md:text-sm tracking-[0.3em] uppercase font-bold">Verified Credentials</span>
@@ -80,13 +46,17 @@ export default function CertificationsSection() {
           <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-4">
             Certification <span className="text-blue-400">Ledger</span>
           </h2>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4">
           {certifications.map((cert, index) => (
-            <div
+            <motion.div
               key={cert.name}
-              ref={el => { itemsRef.current[index] = el; }}
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              whileInView={{ opacity: 1, scale: 1, y: 0 }}
+              viewport={{ once: false, margin: "-50px" }}
+              transition={{ duration: 0.4, delay: index * 0.04 }}
+              whileHover={{ y: -4, scale: 1.03 }}
               className="group p-4 md:p-6 rounded-xl md:rounded-2xl border border-white/5 bg-zinc-900/40 hover:bg-zinc-800/60 hover:border-blue-500/30 transition-all duration-300 flex flex-col items-center text-center relative overflow-hidden"
             >
               <div 
@@ -99,12 +69,11 @@ export default function CertificationsSection() {
                 style={{ backgroundColor: `${cert.color}15` }}
               >
                 {React.createElement(IconMap[cert.icon], { className: "w-5 md:w-6 h-5 md:h-6", style: { color: cert.color } })}
-
               </div>
               
               <h3 className="text-[10px] md:text-xs font-bold text-white mb-1 group-hover:text-blue-400 transition-colors uppercase tracking-tight relative z-10 line-clamp-2">{cert.name}</h3>
               <p className="text-[9px] md:text-[10px] text-gray-500 uppercase font-mono tracking-wider relative z-10">{cert.issuer}</p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

@@ -1,12 +1,13 @@
 "use client";
 
 import React, { useEffect, useRef, useState, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { 
   Code2, Brain, Cpu, Database, Cloud, Wrench, Palette, Languages, 
-  X, Sparkles, Network, ArrowUpRight
+  X, Sparkles
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import Modal from "../components/Modal";
 
 interface SkillDomain {
   id: string;
@@ -177,7 +178,7 @@ export default function SkillsMatrix() {
     canvas.addEventListener("mousemove", handleMouseMove);
     canvas.addEventListener("click", handleClick);
 
-    const render = (time: number) => {
+    const render = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       const m = mouseRef.current;
@@ -310,7 +311,7 @@ export default function SkillsMatrix() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
           transition={{ duration: 0.8 }}
           className="text-center mb-12"
         >
@@ -356,86 +357,76 @@ export default function SkillsMatrix() {
         </div>
       </div>
 
-      {/* Non-Overflowing Glassmorphic Skill Detail Panel */}
-      <AnimatePresence>
+      {/* Shared Portal Modal Component for Skill Domain Details */}
+      <Modal
+        isOpen={!!activeDomain}
+        onClose={() => setActiveDomain(null)}
+        maxWidth="max-w-2xl"
+        ariaLabel="Domain Skill Details"
+      >
         {activeDomain && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/85 backdrop-blur-xl"
-            onClick={() => setActiveDomain(null)}
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.9, opacity: 0, y: 20 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-2xl bg-zinc-950 border border-white/15 rounded-3xl overflow-hidden shadow-2xl flex flex-col max-h-[85vh]"
+          <div className="flex flex-col">
+            {/* Panel Header */}
+            <div
+              className="relative p-6 md:p-8 border-b border-white/10 flex items-center justify-between"
+              style={{ background: `linear-gradient(to bottom, ${activeDomain.color}15, transparent)` }}
             >
-              {/* Panel Header */}
-              <div
-                className="relative p-6 md:p-8 border-b border-white/10 flex items-center justify-between"
-                style={{ background: `linear-gradient(to bottom, ${activeDomain.color}15, transparent)` }}
-              >
-                <div className="flex items-center gap-4">
-                  <div
-                    className="w-14 h-14 rounded-2xl flex items-center justify-center bg-zinc-900 border border-white/10 shadow-lg"
-                    style={{ backgroundColor: `${activeDomain.color}20` }}
-                  >
-                    {React.createElement(activeDomain.icon, {
-                      className: "w-7 h-7",
-                      style: { color: activeDomain.color },
-                    })}
-                  </div>
-                  <div>
-                    <h3 className="text-2xl font-bold text-white uppercase tracking-tight">
-                      {activeDomain.name}
-                    </h3>
-                    <p className="text-zinc-400 text-xs font-mono mt-0.5">{activeDomain.description}</p>
-                  </div>
-                </div>
-
-                <button
-                  onClick={() => setActiveDomain(null)}
-                  className="p-2 rounded-full bg-white/5 hover:bg-white/10 transition-colors text-zinc-400 hover:text-white"
-                  aria-label="Close skills panel"
+              <div className="flex items-center gap-4">
+                <div
+                  className="w-14 h-14 rounded-2xl flex items-center justify-center bg-zinc-900 border border-white/10 shadow-lg"
+                  style={{ backgroundColor: `${activeDomain.color}20` }}
                 >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-
-              {/* Panel Content Skills Grid */}
-              <div className="p-6 md:p-8 overflow-y-auto">
-                <h4 className="text-xs font-mono uppercase text-zinc-500 tracking-widest mb-4 font-bold">
-                  Illuminated Skill Neurons ({activeDomain.skills.length})
-                </h4>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                  {activeDomain.skills.map((skill, idx) => (
-                    <motion.div
-                      key={skill}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: idx * 0.03 }}
-                      className="p-3.5 rounded-xl bg-white/5 border border-white/10 flex items-center gap-3 hover:border-cyan-400/40 transition-colors"
-                    >
-                      <div
-                        className="w-2.5 h-2.5 rounded-full flex-shrink-0"
-                        style={{
-                          backgroundColor: activeDomain.color,
-                          boxShadow: `0 0 10px ${activeDomain.color}`,
-                        }}
-                      />
-                      <span className="text-sm text-zinc-200 font-mono font-medium">{skill}</span>
-                    </motion.div>
-                  ))}
+                  {React.createElement(activeDomain.icon, {
+                    className: "w-7 h-7",
+                    style: { color: activeDomain.color },
+                  })}
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-white uppercase tracking-tight">
+                    {activeDomain.name}
+                  </h3>
+                  <p className="text-zinc-400 text-xs font-mono mt-0.5">{activeDomain.description}</p>
                 </div>
               </div>
-            </motion.div>
-          </motion.div>
+
+              <button
+                onClick={() => setActiveDomain(null)}
+                className="p-2 rounded-full bg-white/5 hover:bg-white/10 transition-colors text-zinc-400 hover:text-white"
+                aria-label="Close skills panel"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Panel Content Skills Grid */}
+            <div className="p-6 md:p-8">
+              <h4 className="text-xs font-mono uppercase text-zinc-500 tracking-widest mb-4 font-bold">
+                Illuminated Skill Neurons ({activeDomain.skills.length})
+              </h4>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                {activeDomain.skills.map((skill, idx) => (
+                  <motion.div
+                    key={skill}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: idx * 0.03 }}
+                    className="p-3.5 rounded-xl bg-white/5 border border-white/10 flex items-center gap-3 hover:border-cyan-400/40 transition-colors"
+                  >
+                    <div
+                      className="w-2.5 h-2.5 rounded-full flex-shrink-0"
+                      style={{
+                        backgroundColor: activeDomain.color,
+                        boxShadow: `0 0 10px ${activeDomain.color}`,
+                      }}
+                    />
+                    <span className="text-sm text-zinc-200 font-mono font-medium">{skill}</span>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </div>
         )}
-      </AnimatePresence>
+      </Modal>
     </section>
   );
 }

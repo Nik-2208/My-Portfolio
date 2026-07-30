@@ -2,7 +2,7 @@
 
 import React, { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
-import { GraduationCap, School, Trophy, Award, Sparkles, CheckCircle2, TrendingUp, BookOpen, Layers } from "lucide-react";
+import { GraduationCap, School, Trophy, Award, CheckCircle2, TrendingUp, BookOpen } from "lucide-react";
 import { useCentralMotion } from "../hooks/useCentralMotion";
 
 const IconMap = {
@@ -107,7 +107,7 @@ function ConfettiCanvas({ active }: { active: boolean }) {
     }
 
     let animationFrameId: number;
-    let startTime = performance.now();
+    const startTime = performance.now();
 
     const render = (time: number) => {
       const elapsed = time - startTime;
@@ -150,15 +150,15 @@ export default function EducationSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const pathRef = useRef<SVGPathElement>(null);
   const { useRaf, isLowPerformance } = useCentralMotion();
-  const isInView = useInView(containerRef, { once: true, margin: "-100px" });
+  const isInView = useInView(containerRef, { once: false, margin: "-100px" });
 
   const [hasRevealed, setHasRevealed] = useState(false);
 
   useEffect(() => {
-    if (isInView && !hasRevealed) {
+    if (isInView) {
       setHasRevealed(true);
     }
-  }, [isInView, hasRevealed]);
+  }, [isInView]);
 
   useRaf(() => {
     if (!containerRef.current || !pathRef.current || isLowPerformance) return;

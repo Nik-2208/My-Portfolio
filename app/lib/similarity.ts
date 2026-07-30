@@ -1,3 +1,5 @@
+import { KnowledgeChunk } from "./knowledge";
+
 /**
  * Safe cosine similarity for number[] vectors
  */
@@ -30,18 +32,16 @@ export function cosineSimilarity(vecA: number[], vecB: number[]): number {
 export function rankChunks(
   queryEmbedding: number[],
   chunkEmbeddings: number[][],
-  chunks: any[]
-): Array<{ chunk: any; score: number }> {
+  chunks: KnowledgeChunk[]
+): Array<{ chunk: KnowledgeChunk; score: number }> {
   if (!queryEmbedding || !chunkEmbeddings || chunkEmbeddings.length === 0) {
     return [];
   }
 
-  const scores: Array<{ chunk: any; score: number }> = chunkEmbeddings.map((embedding, i) => ({
+  const scores: Array<{ chunk: KnowledgeChunk; score: number }> = chunkEmbeddings.map((embedding, i) => ({
     chunk: chunks[i],
     score: cosineSimilarity(queryEmbedding, embedding)
   }));
 
   return scores.sort((a, b) => b.score - a.score);
 }
-
-

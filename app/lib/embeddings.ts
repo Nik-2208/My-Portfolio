@@ -10,7 +10,7 @@ export function textToVector(text: string): WordVector {
   
   const words = text.toLowerCase()
     .replace(/[^\w\s]/g, '') // Remove punctuation
-    .split(/\\s+/)
+    .split(/\s+/)
     .filter(word => word.length > 2); // Short words ignored
 
   const vector: WordVector = {};
@@ -25,7 +25,7 @@ export function vectorToArray(vector: WordVector, allWords: string[]): number[] 
 }
 
 // Precompute global vocabulary from knowledge base
-let globalVocabulary: string[] = [];
+const globalVocabulary: string[] = [];
 
 export function buildVocabulary(texts: string[]): string[] {
   const allWords = new Set<string>();
@@ -33,17 +33,17 @@ export function buildVocabulary(texts: string[]): string[] {
     const vec = textToVector(text);
     Object.keys(vec).forEach(word => allWords.add(word));
   }
-  return Array.from(allWords).sort();
+  const result = Array.from(allWords).sort();
+  globalVocabulary.length = 0;
+  globalVocabulary.push(...result);
+  return result;
 }
 
 export function embedTexts(texts: string[], vocabulary?: string[]): number[][] {
-  if (!vocabulary) {
-    vocabulary = globalVocabulary;
-  }
-  return texts.map(text => vectorToArray(textToVector(text), vocabulary));
+  const targetVocab = vocabulary || globalVocabulary;
+  return texts.map(text => vectorToArray(textToVector(text), targetVocab));
 }
 
 export function embedText(text: string, vocabulary?: string[]): number[] {
   return embedTexts([text], vocabulary)[0];
 }
-

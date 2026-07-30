@@ -12,14 +12,8 @@ export default function NeuralNetworkZoom() {
     offset: ["start start", "end end"],
   });
 
-  // Phases progress through the 300vh sticky scroll range
-  // Phase 2: Synaptic ignition (0.0 - 0.25)
-  // Phase 3: Digital replacing biological (0.25 - 0.55)
-  // Phase 4: Full AI Architecture (0.55 - 0.8)
-  // Phase 5: Entering the Neural Universe (0.8 - 1.0)
-
   const scale = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.8, 1.2, 1.8, 4.5]);
-  const opacity = useTransform(scrollYProgress, [0, 0.1, 0.95, 1], [0, 1, 1, 0]);
+  const opacity = useTransform(scrollYProgress, [0, 0.05, 0.95, 1], [1, 1, 1, 0]);
 
   // Phase text indicators
   const phase1Text = useTransform(scrollYProgress, [0, 0.2, 0.25], [1, 1, 0]);

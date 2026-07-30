@@ -1,37 +1,17 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { User, MapPin, GraduationCap, Cpu, Network } from "lucide-react";
 
 export default function AboutNik() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [isInView, setIsInView] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsInView(true);
-        }
-      },
-      { threshold: 0.2 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <section ref={sectionRef} id="about" className="relative py-24 md:py-32 bg-black z-20 overflow-hidden">
+    <section id="about" className="relative py-24 md:py-32 bg-black z-20 overflow-hidden" aria-label="Identity Profile">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: false, margin: "-50px" }}
             transition={{ duration: 0.8 }}
             className="order-2 lg:order-1"
           >
@@ -71,7 +51,8 @@ export default function AboutNik() {
 
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : {}}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: false, margin: "-50px" }}
             transition={{ duration: 1, delay: 0.2 }}
             className="order-1 lg:order-2 relative h-[400px] md:h-[500px] flex items-center justify-center"
           >

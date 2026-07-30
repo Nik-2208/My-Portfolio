@@ -59,7 +59,6 @@ export function MotionProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    // --- Performance Aware Scroll System ---
     try {
       const lenis = new Lenis({
         duration: 1.2,
@@ -71,8 +70,8 @@ export function MotionProvider({ children }: { children: ReactNode }) {
       lenisRef.current = lenis;
 
       const handleScroll = () => {
-        stateRef.current.scrollProgress = lenis.progress;
-        stateRef.current.scroll.y = window.scrollY;
+        stateRef.current.scrollProgress = lenis.progress || 0;
+        stateRef.current.scroll.y = window.scrollY || window.pageYOffset || 0;
       };
 
       const handleMouseMove = (e: MouseEvent) => {
@@ -80,12 +79,12 @@ export function MotionProvider({ children }: { children: ReactNode }) {
         stateRef.current.mouse.y = e.clientY / window.innerHeight;
       };
 
+      window.addEventListener('scroll', handleScroll, { passive: true });
       window.addEventListener('mousemove', handleMouseMove, { passive: true });
       lenis.on('scroll', handleScroll);
 
-      // --- Central Recovery Loop ---
+      // Central recovery animation loop
       const loop = (time: number) => {
-        // FPS Detection
         if (fpsRef.current.lastTime === 0) fpsRef.current.lastTime = time;
         fpsRef.current.frames++;
         
@@ -97,12 +96,11 @@ export function MotionProvider({ children }: { children: ReactNode }) {
           fpsRef.current.lastTime = time;
         }
 
-        // Apply smoothing physics
-        stateRef.current.scroll.smoothY = lerp(stateRef.current.scroll.smoothY, stateRef.current.scroll.y, 0.08);
-        stateRef.current.mouse.smoothX = lerp(stateRef.current.mouse.smoothX, stateRef.current.mouse.x, 0.08);
-        stateRef.current.mouse.smoothY = lerp(stateRef.current.mouse.smoothY, stateRef.current.mouse.y, 0.08);
+        // Apply smooth physics
+        stateRef.current.scroll.smoothY = lerp(stateRef.current.scroll.smoothY, stateRef.current.scroll.y, 0.1);
+        stateRef.current.mouse.smoothX = lerp(stateRef.current.mouse.smoothX, stateRef.current.mouse.x, 0.1);
+        stateRef.current.mouse.smoothY = lerp(stateRef.current.mouse.smoothY, stateRef.current.mouse.y, 0.1);
 
-        // System Processing
         if (lenis) lenis.raf(time);
         
         rafCallbacks.current.forEach((cb) => {
@@ -119,6 +117,7 @@ export function MotionProvider({ children }: { children: ReactNode }) {
       rafIdRef.current = requestAnimationFrame(loop);
 
       return () => {
+        window.removeEventListener('scroll', handleScroll);
         window.removeEventListener('mousemove', handleMouseMove);
         if (lenis) {
           lenis.off('scroll', handleScroll);

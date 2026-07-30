@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Sparkles, Send, Trash2, X, Brain, Bot } from 'lucide-react';
 import { ErrorBoundary } from './ErrorBoundary';
 import { MessageBubble } from './MessageBubble';
 import { initRAG, queryRAG } from '../lib/rag';
@@ -12,16 +13,27 @@ interface Message {
   content: string;
 }
 
+const STARTER_QUESTIONS = [
+  "Tell me about Nik",
+  "Diploma Score & Merit Rank",
+  "Show AI Projects",
+  "Work & Internships",
+  "Contact Info & Links"
+];
 
+let msgIdCounter = 0;
+function generateId() {
+  msgIdCounter += 1;
+  return `msg-${msgIdCounter}-${Math.random().toString(36).substring(2, 9)}`;
+}
 
 export default function NikAIAssistant() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [isFallbackMode, setIsFallbackMode] = useState(false);
-  const [status, setStatus] = useState<'init' | 'live' | 'fallback'>('init');
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -29,139 +41,166 @@ export default function NikAIAssistant() {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages, scrollToBottom]);
+  }, [messages, isLoading, scrollToBottom]);
 
-  // Safe RAG initialization
+  // RAG initialization
   useEffect(() => {
-    const initializeRAG = async () => {
-      try {
-        initRAG();
-        setStatus('live');
-        setIsFallbackMode(false);
-        console.log('🧠 NikAI: RAG initialized successfully');
-      } catch (error) {
-        console.error('🧠 NikAI: RAG init failed, fallback mode:', error);
-        setIsFallbackMode(true);
-        setStatus('fallback');
-      }
-    };
-
-    initializeRAG();
+    try {
+      initRAG();
+    } catch (e) {
+      console.warn('NikAI: RAG init fallback:', e);
+    }
   }, []);
 
-  const sendMessage = async () => {
-    if (!input.trim() || isLoading) return;
+  useEffect(() => {
+    if (isOpen) {
+      setTimeout(() => inputRef.current?.focus(), 150);
+    }
+  }, [isOpen]);
 
-    const userMessage: Message = {
-      id: Date.now().toString(),
+  const handleSend = async (queryText?: string) => {
+    const textToSend = (queryText || input).trim();
+    if (!textToSend || isLoading) return;
+
+    const userMsg: Message = {
+      id: generateId(),
       role: 'user',
-      content: input.trim()
+      content: textToSend,
     };
 
-    setMessages(prev => [...prev, userMessage]);
-    setInput('');
+    setMessages((prev) => [...prev, userMsg]);
+    if (!queryText) setInput('');
     setIsLoading(true);
 
     try {
-      // Timeout safety
-      const timeoutPromise = new Promise<never>((_, reject) =>
-        setTimeout(() => reject(new Error('Timeout')), 5000)
-      );
+      const fullReply = queryRAG(textToSend);
 
-      let aiResponse: string;
+      // Simulate human-like fast character streaming
+      const aiMsgId = generateId();
+      setMessages((prev) => [...prev, { id: aiMsgId, role: 'ai', content: '' }]);
 
-      try {
-        aiResponse = await Promise.race([queryRAG(userMessage.content), timeoutPromise]);
-      } catch (ragError) {
-        console.warn('🧠 NikAI RAG failed:', ragError);
-        aiResponse = "RAG optimized! Try: skills, projects, experience, or education. 🔧";
-        setIsFallbackMode(true);
-      }
-
-      const aiMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        role: 'ai',
-        content: aiResponse
-      };
-
-      setMessages(prev => [...prev, aiMessage]);
-      setStatus(isFallbackMode ? 'fallback' : 'live');
+      let index = 0;
+      const chunkSize = Math.max(2, Math.floor(fullReply.length / 25));
+      
+      const interval = setInterval(() => {
+        index += chunkSize;
+        if (index >= fullReply.length) {
+          index = fullReply.length;
+          clearInterval(interval);
+          setIsLoading(false);
+        }
+        
+        setMessages((prev) =>
+          prev.map((msg) =>
+            msg.id === aiMsgId ? { ...msg, content: fullReply.slice(0, index) } : msg
+          )
+        );
+      }, 25);
     } catch (error) {
-      console.error('🧠 NikAI: Send failed:', error);
-      const fallbackMsg: Message = {
-        id: (Date.now() + 1).toString(),
-        role: 'ai',
-        content: "Quick tip: Ask about **skills**, **projects**, **experience** or **education**! 🛠️"
-      };
-      setMessages(prev => [...prev, fallbackMsg]);
-    } finally {
+      console.error('NikAI: Processing error:', error);
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: generateId(),
+          role: 'ai',
+          content: "I'm here! Feel free to ask about my **skills**, **projects**, **education & merit rank**, or **contact details**!",
+        },
+      ]);
       setIsLoading(false);
     }
   };
 
-  const toggleChat = () => {
-    setIsOpen(!isOpen);
-  };
-
   const clearChat = () => {
     setMessages([]);
-    setIsFallbackMode(false);
-    setStatus('live');
-    // Re-init RAG safely
-    try {
-      initRAG();
-    } catch {}
   };
 
   return (
-    <ErrorBoundary fallback={<div className="fixed bottom-6 right-6 bg-red-500/90 text-white px-4 py-2 rounded-lg text-sm">AI Assistant safe</div>}>
+    <ErrorBoundary fallback={<div className="fixed bottom-6 right-6 bg-cyan-900/80 text-white px-4 py-2 rounded-xl text-xs font-mono">NikAI Active</div>}>
       <>
-        {/* Toggle Button */}
+        {/* Floating AI Activation Trigger */}
         <motion.button
-          className="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 shadow-2xl border-2 border-white/20 rounded-2xl flex items-center justify-center text-white text-xl font-bold z-50 backdrop-blur-sm"
-          onClick={toggleChat}
-          whileTap={{ scale: 0.95 }}
+          className="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 hover:brightness-110 shadow-[0_0_30px_rgba(0,255,255,0.35)] border-2 border-white/20 rounded-2xl flex items-center justify-center text-white z-[999] backdrop-blur-md"
+          onClick={() => setIsOpen(!isOpen)}
+          whileTap={{ scale: 0.92 }}
           whileHover={{ scale: 1.05 }}
+          aria-label="Toggle Nik AI Assistant"
         >
-          {isOpen ? '✕' : '💬'}
+          {isOpen ? <X className="w-6 h-6" /> : <Bot className="w-7 h-7 text-cyan-200" />}
         </motion.button>
 
-        {/* Chat Panel */}
+        {/* Floating Glassmorphic Chat Panel */}
         <AnimatePresence>
           {isOpen && (
             <motion.div
-              initial={{ opacity: 0, y: 100, scale: 0.9 }}
+              initial={{ opacity: 0, y: 40, scale: 0.92 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 100, scale: 0.9 }}
-              className="fixed bottom-24 right-6 w-80 max-h-96 bg-black/95 border border-cyan-500/50 backdrop-blur-xl rounded-3xl shadow-2xl z-40 overflow-hidden"
+              exit={{ opacity: 0, y: 40, scale: 0.92 }}
+              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              className="fixed bottom-24 right-4 sm:right-6 w-[calc(100vw-2rem)] sm:w-96 max-h-[520px] bg-zinc-950/95 border border-cyan-500/40 backdrop-blur-2xl rounded-3xl shadow-[0_10px_40px_rgba(0,0,0,0.8)] z-[998] flex flex-col overflow-hidden"
             >
-              {/* Header */}
-              <div className="p-4 border-b border-white/10 bg-gradient-to-r from-cyan-500/10 to-blue-500/10">
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 bg-gradient-to-r from-cyan-400 to-blue-400 rounded-xl flex items-center justify-center text-xs font-bold">
-                    🧠
+              {/* Panel Header */}
+              <div className="p-4 border-b border-white/10 bg-gradient-to-r from-cyan-500/15 via-purple-500/15 to-transparent flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 bg-gradient-to-r from-cyan-400 to-purple-500 rounded-xl flex items-center justify-center shadow-md">
+                    <Brain className="w-5 h-5 text-black" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-white text-sm">NikAI v2.0</h3>
-                    <div className="text-xs text-emerald-400 font-mono">
-                      🟢 RAG Ready
-                    </div>
+                    <h3 className="font-bold text-white text-sm font-mono tracking-tight flex items-center gap-2">
+                      Nik AI Assistant
+                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                    </h3>
+                    <span className="text-[10px] text-cyan-300 font-mono">
+                      Personal Digital Avatar • RAG v2.5
+                    </span>
                   </div>
                 </div>
-                <button
-                  onClick={clearChat}
-                  className="mt-2 text-xs text-gray-400 hover:text-white transition-colors"
-                >
-                  Clear
-                </button>
+
+                <div className="flex items-center gap-1">
+                  {messages.length > 0 && (
+                    <button
+                      onClick={clearChat}
+                      className="p-2 rounded-xl text-zinc-400 hover:text-white hover:bg-white/10 transition-colors"
+                      title="Clear chat"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  )}
+                  <button
+                    onClick={() => setIsOpen(false)}
+                    className="p-2 rounded-xl text-zinc-400 hover:text-white hover:bg-white/10 transition-colors"
+                    aria-label="Close assistant"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
 
-              {/* Messages */}
-              <div className="h-64 overflow-y-auto p-4 space-y-3 scrollbar-thin scrollbar-thumb-cyan-500/50 scrollbar-track-black/50">
+              {/* Chat Message Scroll Area */}
+              <div className="flex-1 overflow-y-auto p-4 space-y-4 min-h-[220px]">
                 {messages.length === 0 ? (
-                  <div className="text-center text-gray-400 text-sm py-8 font-mono">
-                    Ask about skills, projects, experience...<br/>
-                    <span className="text-cyan-400">🧠 Ready!</span>
+                  <div className="flex flex-col items-center justify-center text-center py-6 px-2 space-y-4">
+                    <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+                      <Sparkles className="w-6 h-6 animate-pulse" />
+                    </div>
+                    <div>
+                      <h4 className="text-white font-bold text-sm mb-1 font-mono">Ask me anything about Nik!</h4>
+                      <p className="text-zinc-400 text-xs font-sans max-w-xs leading-relaxed">
+                        I know Nik&apos;s 97.03% diploma rank, AI projects, EduJR & AICTE internships, skills, and contact info.
+                      </p>
+                    </div>
+
+                    {/* Starter Question Chips */}
+                    <div className="w-full pt-2 flex flex-wrap gap-1.5 justify-center">
+                      {STARTER_QUESTIONS.map((q) => (
+                        <button
+                          key={q}
+                          onClick={() => handleSend(q)}
+                          className="px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 hover:border-cyan-400/50 hover:bg-cyan-500/10 text-cyan-200 text-xs font-mono transition-all text-left"
+                        >
+                          ⚡ {q}
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 ) : (
                   messages.map((msg) => (
@@ -175,38 +214,39 @@ export default function NikAIAssistant() {
                     </motion.div>
                   ))
                 )}
-                <div ref={messagesEndRef} />
+
+                {/* Animated Typing Indicator */}
                 {isLoading && (
                   <div className="flex justify-start">
-                    <div className="bg-gradient-to-r from-cyan-500/20 to-blue-500/20 text-cyan-100 p-3 rounded-2xl border border-cyan-500/30 text-sm">
-                      <div className="flex items-center gap-2">
-                        <div className="w-5 h-5 border-2 border-cyan-500/50 border-t-cyan-400 rounded-full animate-spin" />
-                        NikAI thinking...
-                      </div>
+                    <div className="bg-zinc-900 border border-cyan-500/30 text-cyan-200 px-4 py-3 rounded-2xl text-xs font-mono flex items-center gap-2">
+                      <div className="w-3.5 h-3.5 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin" />
+                      <span>Nik AI thinking...</span>
                     </div>
                   </div>
                 )}
+                <div ref={messagesEndRef} />
               </div>
 
-              {/* Input */}
-              <div className="p-4 border-t border-white/10">
-                <div className="flex gap-2">
+              {/* Input Area */}
+              <div className="p-3 border-t border-white/10 bg-black/60">
+                <div className="flex items-center gap-2">
                   <input
+                    ref={inputRef}
                     type="text"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
-                    onKeyPress={(e) => e.key === 'Enter' && !isLoading && sendMessage()}
-                    placeholder="Ask about skills, projects..."
-                    className="flex-1 bg-white/5 border border-white/20 rounded-2xl px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-cyan-400 transition-colors text-sm"
-                    disabled={isLoading}
+                    onKeyDown={(e) => e.key === 'Enter' && !isLoading && handleSend()}
+                    placeholder="Ask about skills, projects, rank..."
+                    className="flex-1 bg-white/5 border border-white/15 focus:border-cyan-400 rounded-xl px-3.5 py-2.5 text-white placeholder-zinc-500 text-xs font-sans focus:outline-none transition-colors"
                   />
                   <motion.button
-                    onClick={sendMessage}
+                    onClick={() => handleSend()}
                     disabled={!input.trim() || isLoading}
                     whileTap={{ scale: 0.95 }}
-                    className="w-10 h-10 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 disabled:opacity-50 text-white rounded-2xl flex items-center justify-center text-lg font-bold shadow-lg"
+                    className="p-2.5 bg-gradient-to-r from-cyan-500 to-purple-600 hover:brightness-110 disabled:opacity-40 text-black font-bold rounded-xl transition-all shadow-md flex items-center justify-center flex-shrink-0"
+                    aria-label="Send message"
                   >
-                    {isLoading ? '⏳' : '➤'}
+                    <Send className="w-4 h-4 text-black" />
                   </motion.button>
                 </div>
               </div>
@@ -217,4 +257,3 @@ export default function NikAIAssistant() {
     </ErrorBoundary>
   );
 }
-

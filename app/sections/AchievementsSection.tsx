@@ -1,9 +1,8 @@
 "use client";
 
-import React, { useRef, useEffect, useState } from "react";
+import React from "react";
+import { motion } from "framer-motion";
 import { Trophy, Award, Target, Zap } from "lucide-react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const IconMap = {
   Trophy: Trophy,
@@ -45,66 +44,38 @@ const events = [
 ];
 
 export default function AchievementsSection() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
-  const [isInView, setIsInView] = useState(false);
-
-  useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !isInView) {
-          setIsInView(true);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (containerRef.current) {
-      observer.observe(containerRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, [isInView]);
-
-  useEffect(() => {
-    if (!isInView || !containerRef.current) return;
-
-    gsap.fromTo(cardsRef.current,
-      { opacity: 0, y: 30 },
-      { 
-        opacity: 1, 
-        y: 0, 
-        duration: 0.6, 
-        stagger: 0.15,
-        ease: "power2.out"
-      }
-    );
-  }, [isInView]);
-
   return (
-    <section ref={containerRef} id="achievements" className="relative py-24 md:py-32 bg-black z-20">
+    <section id="achievements" className="relative py-24 md:py-32 bg-black z-20 overflow-hidden" aria-label="Milestones and Achievements">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16 md:mb-20">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, margin: "-50px" }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16 md:mb-20"
+        >
           <div className="flex items-center justify-center gap-3 mb-4">
             <Trophy className="w-6 md:w-8 h-6 md:h-8 text-yellow-400" />
             <span className="text-yellow-400 text-xs md:text-sm tracking-[0.3em] uppercase font-bold">Hall of Fame</span>
           </div>
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-4">
+          <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-4 uppercase tracking-tight">
             Milestone <span className="text-yellow-400">Archives</span>
           </h2>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 md:mb-16">
           {achievements.map((item, index) => (
-            <div
+            <motion.div
               key={item.title}
-              ref={el => { cardsRef.current[index] = el; }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, margin: "-50px" }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              whileHover={{ y: -6, scale: 1.02 }}
               className="group p-6 md:p-8 rounded-2xl md:rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md hover:border-yellow-500/50 transition-all duration-300 relative overflow-hidden"
             >
               <div 
-                className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300"
+                className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none"
                 style={{ background: `radial-gradient(circle at top right, ${item.color}, transparent 70%)` }}
               />
               
@@ -113,19 +84,22 @@ export default function AchievementsSection() {
                 style={{ backgroundColor: `${item.color}20` }}
               >
                 {React.createElement(IconMap[item.icon], { className: "w-6 md:w-7 h-6 md:h-7", style: { color: item.color } })}
-
-
-
               </div>
               
               <h3 className="text-lg md:text-xl font-bold text-white mb-2 relative z-10">{item.title}</h3>
               <p className="text-yellow-500/80 text-xs font-mono mb-3 uppercase tracking-widest relative z-10">{item.event}</p>
-              <p className="text-gray-400 text-sm leading-relaxed relative z-10">{item.description}</p>
-            </div>
+              <p className="text-gray-400 text-sm leading-relaxed relative z-10 font-sans">{item.description}</p>
+            </motion.div>
           ))}
         </div>
 
-        <div className="p-8 md:p-10 rounded-3xl border border-white/5 bg-zinc-900/30 backdrop-blur-sm">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, margin: "-50px" }}
+          transition={{ duration: 0.8 }}
+          className="p-8 md:p-10 rounded-3xl border border-white/5 bg-zinc-900/30 backdrop-blur-sm"
+        >
           <div className="flex items-center gap-3 mb-6 md:mb-8">
             <Zap className="w-5 md:w-6 h-5 md:h-6 text-cyan-400" />
             <h3 className="text-xl md:text-2xl font-bold text-white uppercase tracking-tighter">Events Participated</h3>
@@ -139,7 +113,7 @@ export default function AchievementsSection() {
               </div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -1,9 +1,10 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Shield, Cpu, Video, Cloud, Mail, FileEdit, ExternalLink, X, Sparkles, TrendingUp } from "lucide-react";
 import { useCentralMotion } from "../hooks/useCentralMotion";
+import Modal from "../components/Modal";
 
 const IconMap = {
   FileEdit,
@@ -162,7 +163,7 @@ export default function ExperienceTimeline() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
           transition={{ duration: 0.8 }}
           className="text-center mb-20 md:mb-28"
         >
@@ -299,105 +300,95 @@ export default function ExperienceTimeline() {
         </div>
       </div>
 
-      {/* Memory Capsule Detail Dialog */}
-      <AnimatePresence>
+      {/* Memory Capsule Detail Portal Dialog */}
+      <Modal
+        isOpen={!!selectedExp}
+        onClose={() => setSelectedExp(null)}
+        maxWidth="max-w-2xl"
+        ariaLabel="Experience Details"
+      >
         {selectedExp && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/85 backdrop-blur-xl"
-            onClick={() => setSelectedExp(null)}
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.9, opacity: 0, y: 20 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-2xl bg-zinc-950 border border-white/15 rounded-3xl overflow-hidden shadow-2xl flex flex-col max-h-[85vh]"
+          <div className="flex flex-col">
+            <div
+              className="relative p-6 md:p-8 border-b border-white/10"
+              style={{ background: `linear-gradient(to bottom, ${selectedExp.color}15, transparent)` }}
             >
-              <div
-                className="relative p-6 md:p-8 border-b border-white/10"
-                style={{ background: `linear-gradient(to bottom, ${selectedExp.color}15, transparent)` }}
+              <button
+                onClick={() => setSelectedExp(null)}
+                className="absolute top-5 right-5 p-2 rounded-full bg-white/5 hover:bg-white/10 transition-colors text-zinc-400 hover:text-white"
+                aria-label="Close memory capsule"
               >
-                <button
-                  onClick={() => setSelectedExp(null)}
-                  className="absolute top-5 right-5 p-2 rounded-full bg-white/5 hover:bg-white/10 transition-colors text-zinc-400 hover:text-white"
-                  aria-label="Close memory capsule"
+                <X className="w-5 h-5" />
+              </button>
+
+              <div className="flex items-center gap-4">
+                <div
+                  className="w-14 h-14 rounded-2xl flex items-center justify-center bg-zinc-900 border border-white/10 shadow-lg"
+                  style={{ backgroundColor: `${selectedExp.color}25` }}
                 >
-                  <X className="w-5 h-5" />
-                </button>
-
-                <div className="flex items-center gap-4">
-                  <div
-                    className="w-14 h-14 rounded-2xl flex items-center justify-center bg-zinc-900 border border-white/10 shadow-lg"
-                    style={{ backgroundColor: `${selectedExp.color}25` }}
-                  >
-                    {React.createElement(IconMap[selectedExp.icon], {
-                      className: "w-7 h-7",
-                      style: { color: selectedExp.color },
-                    })}
+                  {React.createElement(IconMap[selectedExp.icon], {
+                    className: "w-7 h-7",
+                    style: { color: selectedExp.color },
+                  })}
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-white uppercase tracking-tight">{selectedExp.role}</h3>
+                  <div className="flex items-center gap-3 mt-1 font-mono text-xs">
+                    <span className="font-bold uppercase" style={{ color: selectedExp.color }}>
+                      {selectedExp.company}
+                    </span>
+                    {selectedExp.website && (
+                      <a
+                        href={selectedExp.website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-cyan-400 hover:underline"
+                      >
+                        {selectedExp.website.replace("https://", "")} <ExternalLink className="w-3 h-3" />
+                      </a>
+                    )}
                   </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-6 md:p-8 space-y-6">
+              {selectedExp.progressionNote && (
+                <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-200 text-sm font-sans flex items-start gap-3">
+                  <Sparkles className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
                   <div>
-                    <h3 className="text-2xl font-bold text-white uppercase tracking-tight">{selectedExp.role}</h3>
-                    <div className="flex items-center gap-3 mt-1 font-mono text-xs">
-                      <span className="font-bold uppercase" style={{ color: selectedExp.color }}>
-                        {selectedExp.company}
-                      </span>
-                      {selectedExp.website && (
-                        <a
-                          href={selectedExp.website}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 text-cyan-400 hover:underline"
-                        >
-                          {selectedExp.website.replace("https://", "")} <ExternalLink className="w-3 h-3" />
-                        </a>
-                      )}
-                    </div>
+                    <strong className="block text-amber-400 font-mono text-xs uppercase mb-1">Career Progression</strong>
+                    <p className="leading-relaxed">{selectedExp.progressionNote}</p>
                   </div>
                 </div>
+              )}
+
+              <div>
+                <h4 className="text-xs font-mono uppercase text-zinc-500 tracking-widest mb-3 font-bold">Core Responsibilities</h4>
+                <ul className="space-y-2.5">
+                  {selectedExp.responsibilities.map((resp, i) => (
+                    <li key={i} className="flex items-start gap-3 text-zinc-300 text-sm leading-relaxed">
+                      <span className="w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0" style={{ backgroundColor: selectedExp.color }} />
+                      <span>{resp}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
 
-              <div className="p-6 md:p-8 overflow-y-auto space-y-6">
-                {selectedExp.progressionNote && (
-                  <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-200 text-sm font-sans flex items-start gap-3">
-                    <Sparkles className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
-                    <div>
-                      <strong className="block text-amber-400 font-mono text-xs uppercase mb-1">Career Progression</strong>
-                      <p className="leading-relaxed">{selectedExp.progressionNote}</p>
-                    </div>
-                  </div>
-                )}
-
-                <div>
-                  <h4 className="text-xs font-mono uppercase text-zinc-500 tracking-widest mb-3 font-bold">Core Responsibilities</h4>
-                  <ul className="space-y-2.5">
-                    {selectedExp.responsibilities.map((resp, i) => (
-                      <li key={i} className="flex items-start gap-3 text-zinc-300 text-sm leading-relaxed">
-                        <span className="w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0" style={{ backgroundColor: selectedExp.color }} />
-                        <span>{resp}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div>
-                  <h4 className="text-xs font-mono uppercase text-zinc-500 tracking-widest mb-3 font-bold">Key Highlights & Impact</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {selectedExp.achievements.map((ach) => (
-                      <span key={ach} className="px-3 py-1.5 rounded-xl text-xs font-mono bg-white/5 border border-white/10 text-zinc-300">
-                        ⚡ {ach}
-                      </span>
-                    ))}
-                  </div>
+              <div>
+                <h4 className="text-xs font-mono uppercase text-zinc-500 tracking-widest mb-3 font-bold">Key Highlights & Impact</h4>
+                <div className="flex flex-wrap gap-2">
+                  {selectedExp.achievements.map((ach) => (
+                    <span key={ach} className="px-3 py-1.5 rounded-xl text-xs font-mono bg-white/5 border border-white/10 text-zinc-300">
+                      ⚡ {ach}
+                    </span>
+                  ))}
                 </div>
               </div>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         )}
-      </AnimatePresence>
+      </Modal>
     </section>
   );
 }

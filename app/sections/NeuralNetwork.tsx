@@ -14,7 +14,7 @@ export default function NeuralNetwork() {
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: false }}
             transition={{ duration: 0.8 }}
           >
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-cyan-500/20 bg-cyan-500/5 mb-6 text-xs font-mono text-cyan-400 uppercase tracking-widest">
@@ -45,7 +45,7 @@ export default function NeuralNetwork() {
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
+            viewport={{ once: false }}
             transition={{ duration: 0.8, delay: 0.2 }}
             className="relative h-[320px] sm:h-[400px] flex items-center justify-center"
           >
@@ -61,7 +61,7 @@ export default function NeuralNetwork() {
               <motion.path
                 initial={{ pathLength: 0 }}
                 whileInView={{ pathLength: 1 }}
-                viewport={{ once: true }}
+                viewport={{ once: false }}
                 transition={{ duration: 2.2, ease: "easeInOut" }}
                 d="M 50 200 Q 150 50, 250 200"
                 fill="none"
@@ -71,7 +71,7 @@ export default function NeuralNetwork() {
               <motion.path
                 initial={{ pathLength: 0 }}
                 whileInView={{ pathLength: 1 }}
-                viewport={{ once: true }}
+                viewport={{ once: false }}
                 transition={{ duration: 2.2, delay: 0.2, ease: "easeInOut" }}
                 d="M 50 200 Q 150 350, 250 200"
                 fill="none"
@@ -81,7 +81,7 @@ export default function NeuralNetwork() {
               <motion.path
                 initial={{ pathLength: 0 }}
                 whileInView={{ pathLength: 1 }}
-                viewport={{ once: true }}
+                viewport={{ once: false }}
                 transition={{ duration: 1.8, delay: 0.8, ease: "easeInOut" }}
                 d="M 250 200 Q 300 100, 350 200"
                 fill="none"
@@ -91,7 +91,7 @@ export default function NeuralNetwork() {
               <motion.path
                 initial={{ pathLength: 0 }}
                 whileInView={{ pathLength: 1 }}
-                viewport={{ once: true }}
+                viewport={{ once: false }}
                 transition={{ duration: 1.8, delay: 1, ease: "easeInOut" }}
                 d="M 250 200 Q 300 300, 350 200"
                 fill="none"
@@ -99,11 +99,11 @@ export default function NeuralNetwork() {
                 strokeWidth="2.5"
               />
 
-              <motion.circle initial={{ scale: 0 }} whileInView={{ scale: 1 }} viewport={{ once: true }} cx="50" cy="200" r="9" fill="#00ffff" />
-              <motion.circle initial={{ scale: 0 }} whileInView={{ scale: 1 }} viewport={{ once: true }} transition={{ delay: 0.4 }} cx="150" cy="125" r="7" fill="#00ffff" />
-              <motion.circle initial={{ scale: 0 }} whileInView={{ scale: 1 }} viewport={{ once: true }} transition={{ delay: 0.6 }} cx="150" cy="275" r="7" fill="#00ffff" />
-              <motion.circle initial={{ scale: 0 }} whileInView={{ scale: 1 }} viewport={{ once: true }} transition={{ delay: 0.9 }} cx="250" cy="200" r="14" fill="#a855f7" className="animate-pulse" />
-              <motion.circle initial={{ scale: 0 }} whileInView={{ scale: 1 }} viewport={{ once: true }} transition={{ delay: 1.3 }} cx="350" cy="200" r="9" fill="#ec4899" />
+              <motion.circle initial={{ scale: 0 }} whileInView={{ scale: 1 }} viewport={{ once: false }} cx="50" cy="200" r="9" fill="#00ffff" />
+              <motion.circle initial={{ scale: 0 }} whileInView={{ scale: 1 }} viewport={{ once: false }} transition={{ delay: 0.4 }} cx="150" cy="125" r="7" fill="#00ffff" />
+              <motion.circle initial={{ scale: 0 }} whileInView={{ scale: 1 }} viewport={{ once: false }} transition={{ delay: 0.6 }} cx="150" cy="275" r="7" fill="#00ffff" />
+              <motion.circle initial={{ scale: 0 }} whileInView={{ scale: 1 }} viewport={{ once: false }} transition={{ delay: 0.9 }} cx="250" cy="200" r="14" fill="#a855f7" className="animate-pulse" />
+              <motion.circle initial={{ scale: 0 }} whileInView={{ scale: 1 }} viewport={{ once: false }} transition={{ delay: 1.3 }} cx="350" cy="200" r="9" fill="#ec4899" />
             </svg>
           </motion.div>
         </div>
