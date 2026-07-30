@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Mail, Linkedin, Github, Phone, Send, MessageSquare, Globe, Loader2, CheckCircle2, Shield, Cpu } from "lucide-react";
-import { saveContactMessage, isFirebaseAvailable } from "../lib/firebase";
+import { Mail, Linkedin, Github, Phone, Send, MessageSquare, Globe, Loader2, CheckCircle2, Shield, Cpu, RefreshCw, AlertCircle } from "lucide-react";
 
 const contactLinks = [
   {
@@ -46,29 +45,43 @@ const languages = [
 export default function ContactPortal() {
   const [formState, setFormState] = useState({ name: "", email: "", message: "" });
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-  const firebaseReady = isFirebaseAvailable();
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setStatus("loading");
-    try {
-      if (!firebaseReady) {
-        console.log('[Contact] Firebase unavailable - logged locally:', formState);
-        setStatus("success");
-      } else {
-        const result = await saveContactMessage(formState);
-        if (result) {
-          setStatus("success");
-        } else {
-          throw new Error('Save failed');
-        }
-      }
-      setFormState({ name: "", email: "", message: "" });
-      setTimeout(() => setStatus("idle"), 5000);
-    } catch (error) {
-      console.error('[Contact] Submit error:', error);
+  const handleSubmit = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    
+    if (!formState.name.trim() || !formState.email.trim() || !formState.message.trim()) {
       setStatus("error");
-      setTimeout(() => setStatus("idle"), 3000);
+      setErrorMessage("Please fill in all fields.");
+      return;
+    }
+
+    setStatus("loading");
+    setErrorMessage("");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formState),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        setStatus("success");
+        setFormState({ name: "", email: "", message: "" });
+        setTimeout(() => setStatus("idle"), 6000);
+      } else {
+        setStatus("error");
+        setErrorMessage(data.error || "Unable to send transmission. Please try again.");
+      }
+    } catch (error) {
+      console.error("[Contact Form] Transmission error:", error);
+      setStatus("error");
+      setErrorMessage("Network error encountered. Please verify connectivity and try again.");
     }
   };
 
@@ -175,7 +188,7 @@ export default function ContactPortal() {
             className="relative"
           >
             <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500/30 via-blue-500/30 to-purple-500/30 rounded-3xl blur opacity-20" />
-            
+
             <div className="relative p-6 md:p-8 lg:p-10 rounded-2xl md:rounded-3xl border border-cyan-500/20 overflow-hidden bg-black/40 backdrop-blur-xl">
               <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-20">
                 <div className="w-full h-1 bg-cyan-500/30 absolute top-0 left-0 animate-scan" />
@@ -200,10 +213,30 @@ export default function ContactPortal() {
                   >
                     <CheckCircle2 className="w-16 md:w-20 h-16 md:h-20 text-green-400 mb-4 md:mb-6" />
                     <h3 className="text-xl md:text-2xl font-bold text-white mb-2">Transmission Received</h3>
-                    <p className="text-gray-400">Message received. Nik will respond soon.</p>
+                    <p className="text-gray-400 text-sm font-mono">Thanks! Your message has been safely received by Nik.</p>
                   </motion.div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-5 md:space-y-6 relative z-10">
+                    {status === "error" && errorMessage && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-300 text-xs font-mono flex items-center justify-between gap-3"
+                      >
+                        <div className="flex items-center gap-2">
+                          <AlertCircle className="w-4 h-4 text-red-400 flex-shrink-0" />
+                          <span>{errorMessage}</span>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => handleSubmit()}
+                          className="px-3 py-1 rounded-lg bg-red-500/20 hover:bg-red-500/30 text-red-200 transition-colors flex items-center gap-1 uppercase tracking-wider font-bold"
+                        >
+                          <RefreshCw className="w-3 h-3" /> Retry
+                        </button>
+                      </motion.div>
+                    )}
+
                     <div className="space-y-2">
                       <label className="text-[10px] md:text-xs text-cyan-400 uppercase tracking-[0.2em] md:tracking-[0.3em] font-bold flex items-center gap-2">
                         <Shield className="w-3 md:w-4 h-3 md:h-4" /> Subject_Identity
@@ -212,7 +245,8 @@ export default function ContactPortal() {
                         type="text"
                         value={formState.name}
                         onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                        className="w-full px-4 md:px-6 py-3 md:py-4 bg-white/5 border border-white/10 rounded-xl md:rounded-2xl text-white placeholder-white/20 focus:border-cyan-500/50 focus:bg-white/10 focus:outline-none transition-all duration-300 font-mono text-sm"
+                        disabled={status === "loading"}
+                        className="w-full px-4 md:px-6 py-3 md:py-4 bg-white/5 border border-white/10 rounded-xl md:rounded-2xl text-white placeholder-white/20 focus:border-cyan-500/50 focus:bg-white/10 focus:outline-none transition-all duration-300 font-mono text-sm disabled:opacity-50"
                         placeholder="ENTER_NAME"
                         required
                       />
@@ -226,7 +260,8 @@ export default function ContactPortal() {
                         type="email"
                         value={formState.email}
                         onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                        className="w-full px-4 md:px-6 py-3 md:py-4 bg-white/5 border border-white/10 rounded-xl md:rounded-2xl text-white placeholder-white/20 focus:border-cyan-500/50 focus:bg-white/10 focus:outline-none transition-all duration-300 font-mono text-sm"
+                        disabled={status === "loading"}
+                        className="w-full px-4 md:px-6 py-3 md:py-4 bg-white/5 border border-white/10 rounded-xl md:rounded-2xl text-white placeholder-white/20 focus:border-cyan-500/50 focus:bg-white/10 focus:outline-none transition-all duration-300 font-mono text-sm disabled:opacity-50"
                         placeholder="ENTER_EMAIL"
                         required
                       />
@@ -239,8 +274,9 @@ export default function ContactPortal() {
                       <textarea
                         value={formState.message}
                         onChange={(e) => setFormState({ ...formState, message: e.target.value })}
+                        disabled={status === "loading"}
                         rows={4}
-                        className="w-full px-4 md:px-6 py-3 md:py-4 bg-white/5 border border-white/10 rounded-xl md:rounded-2xl text-white placeholder-white/20 focus:border-cyan-500/50 focus:bg-white/10 focus:outline-none transition-all duration-300 font-mono text-sm resize-none"
+                        className="w-full px-4 md:px-6 py-3 md:py-4 bg-white/5 border border-white/10 rounded-xl md:rounded-2xl text-white placeholder-white/20 focus:border-cyan-500/50 focus:bg-white/10 focus:outline-none transition-all duration-300 font-mono text-sm resize-none disabled:opacity-50"
                         placeholder="ENTER_MESSAGE_BUFFER..."
                         required
                       />
@@ -249,20 +285,19 @@ export default function ContactPortal() {
                     <motion.button
                       type="submit"
                       disabled={status === "loading"}
-                      whileHover={{ scale: 1.01 }}
-                      whileTap={{ scale: 0.99 }}
-                      className="w-full py-3 md:py-4 bg-cyan-500/20 border border-cyan-500/50 text-cyan-400 font-bold rounded-xl md:rounded-2xl hover:bg-cyan-500 hover:text-white transition-all duration-500 flex items-center justify-center gap-2 md:gap-3 uppercase tracking-[0.2em] md:tracking-[0.3em] text-xs md:text-sm overflow-hidden relative"
+                      whileHover={status !== "loading" ? { scale: 1.01 } : undefined}
+                      whileTap={status !== "loading" ? { scale: 0.99 } : undefined}
+                      className="w-full py-3 md:py-4 bg-cyan-500/20 border border-cyan-500/50 text-cyan-400 font-bold rounded-xl md:rounded-2xl hover:bg-cyan-500 hover:text-white transition-all duration-500 flex items-center justify-center gap-2 md:gap-3 uppercase tracking-[0.2em] md:tracking-[0.3em] text-xs md:text-sm overflow-hidden relative disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {status === "loading" ? (
                         <>
-                          <Loader2 className="w-4 md:w-5 h-4 md:h-5 animate-spin" />
-                          Processing...
+                          <Loader2 className="w-4 md:w-5 h-4 md:h-5 animate-spin text-cyan-400" />
+                          <span>Transmitting Payload...</span>
                         </>
                       ) : (
                         <>
                           <Send className="w-4 md:w-5 h-4 md:h-5" />
-                          {firebaseReady ? 'Execute Send' : 'Log Locally'}
-                        
+                          <span>Execute Send</span>
                         </>
                       )}
                     </motion.button>
