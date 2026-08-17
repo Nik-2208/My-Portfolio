@@ -363,7 +363,7 @@ export default function Hero() {
         </a>
 
         <a
-          href="https://drive.google.com/file/d/1FxVBLLUeSW44sUMt0_MifN_pctIrWvtG/view?usp=sharing"
+          href="https://drive.google.com/file/d/1_NPArDt30pzTGBTcnmXtoNpTQRml9ghh/view?usp=sharing"
           target="_blank"
           rel="noopener noreferrer"
           className="w-11 h-11 rounded-2xl border border-white/10 bg-[#050608]/80 backdrop-blur-xl flex items-center justify-center text-zinc-400 hover:text-pink-400 hover:border-pink-400/50 hover:shadow-[0_0_15px_rgba(236,72,153,0.3)] transition-all duration-300 group"
