@@ -10,9 +10,9 @@ const keywordResponses: Record<string, string> = {
   'machine learning': 'Built NIDS, Resume Analyzer, Recipe Predictor, AQI Dashboard using Scikit-learn & Streamlit.',
 
   // Experience
-  'experience': 'Cybersecurity Intern (Edunet/VOIS), LMS Admin (KJSAC), Hardware Intern (KJSIT).',
-  'worked': 'Current: Cybersecurity AI Intern. Past: LMS Admin & E-Content (50+ videos), Hardware Engineer.',
-  'intern': '1. Cybersecurity with GenAI (Edunet/VOIS) 2. LMS Admin (KJSAC) 3. Hardware Engineer (KJSIT).',
+  'experience': 'AI Video Gen Intern (Fin Maverick), Content Writer (EduJR), Email Marketer (EduJR), Cybersecurity (Edunet/VOIS), LMS Admin (KJSAC), Hardware Intern (VTI).',
+  'worked': 'AI Video Gen Intern at Fin Maverick. Content Writer & Email Marketer at EduJR. Cybersecurity, LMS Admin, Hardware Intern.',
+  'intern': 'AI Video Gen (Fin Maverick), Content Writer (EduJR), Email Marketer (EduJR), Cybersecurity (Edunet/VOIS), LMS Admin (KJSAC), Hardware Engineer (VTI).',
   'cybersecurity': 'Edunet/VOIS Intern: Wireshark analysis, keylogger project, AI monitoring workflows.',
 
   // Projects
@@ -23,9 +23,9 @@ const keywordResponses: Record<string, string> = {
   'aqi': 'Smart AQI Predictor - forecasts pollution levels, interactive dashboard.',
 
   // Education/Certs
-  'education': 'Diploma Computer Engineering, KJ Somaiya Polytechnic (95.5% Sem 5).',
+  'education': 'Diploma Computer Engineering, KJ Somaiya Polytechnic (97.03% Final Score, Rank 132 in Maharashtra).',
   'cert': 'IBM ML Python, Coursera Data Analysis, Microsoft AI-900, Deloitte/BCG/Tata GenAI certs.',
-  'college': 'KJ Somaiya Polytechnic - Diploma Computer Engineering.',
+  'college': 'KJ Somaiya Polytechnic - Diploma Computer Engineering (97.03%, Rank 132).',
 
   // Contact
   'contact': 'nikhileshchavdawork@gmail.com | +91 8928027482 | LinkedIn & GitHub in footer.',

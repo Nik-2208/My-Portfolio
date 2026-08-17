@@ -52,15 +52,34 @@ const KNOWLEDGE_GRAPH: Record<string, {
   summary: string;
   details: string[];
 }> = {
+  finmaverick: {
+    type: 'EXPERIENCE',
+    title: 'Fin Maverick — AI Video Generation Intern',
+    summary: 'Duration: 1 July 2026 – Present | Brand Operated by Pravesio Consulting Private Limited (Remote)',
+    details: [
+      '**Video Generation**: Generated instructional and promotional videos using company approved AI video tools.',
+      '**Quality Control**: Performed quality checks (QC) on video outputs to revise errors and align with brand standards.',
+      '**Documents**: View Certificate (https://drive.google.com/file/d/13X4dQ-44cNy8SjpOA-LdyqYvJs9MxGH4/view?usp=sharing), View Letter of Recommendation by Reporting Manager Niyati Arora (https://drive.google.com/file/d/1yVU29gpxrdeMrcDB85R6Ka3HvoW6hdgp/view?usp=drive_link).'
+    ]
+  },
+  maverick: {
+    type: 'EXPERIENCE',
+    title: 'Fin Maverick — AI Video Generation Intern',
+    summary: 'Duration: 1 July 2026 – Present | Brand Operated by Pravesio Consulting Private Limited (Remote)',
+    details: [
+      '**Video Generation**: Generated instructional and promotional videos using company approved AI video tools.',
+      '**Quality Control**: Performed quality checks (QC) on video outputs to revise errors and align with brand standards.',
+      '**Documents**: View Certificate (https://drive.google.com/file/d/13X4dQ-44cNy8SjpOA-LdyqYvJs9MxGH4/view?usp=sharing), View Letter of Recommendation by Reporting Manager Niyati Arora (https://drive.google.com/file/d/1yVU29gpxrdeMrcDB85R6Ka3HvoW6hdgp/view?usp=drive_link).'
+    ]
+  },
   edujr: {
     type: 'EXPERIENCE',
     title: 'EduJR — Content Writing & Email Marketing Intern',
     summary: 'Duration: April 2026 – June 2026 | Company: EduJR (edujr.com)',
     details: [
-      '**Promoted Role**: Initially hired for Email Marketing and promoted to Content Writing Intern following exceptional conversion performance.',
-      '**Email Marketing**: Executed B2B outreach sending ~100 personalized daily emails to prospective educational partners.',
-      '**Content Writing**: Researched and authored 40+ SEO-friendly technological and educational blog articles.',
-      '**Technologies & Tools**: Email Automation, SEO Strategy, Content Management, Analytics.'
+      '**Promoted Role**: Initially hired for Email Marketing and promoted to Content Writing Intern following exceptional outreach performance.',
+      '**Email Marketing (4 Apr – 30 May)**: Sent ~100 daily client emails. View Certificate (https://drive.google.com/file/d/1GDQvgmwXCb8VRLJzHByxzljd-GDLBn2Y/view?usp=sharing).',
+      '**Content Writing (28 Apr – 25 Jun)**: Authored 40+ blog posts. View Certificate (https://drive.google.com/file/d/1NsVepnJgnFrQxaP_fzDiKn9NMBCGwQYx/view?usp=sharing).'
     ]
   },
   vois: {
@@ -99,16 +118,17 @@ const KNOWLEDGE_GRAPH: Record<string, {
     details: [
       '**LMS Administration**: Administered Moodle LMS platform for faculty and students.',
       '**Video Production**: Produced and edited 50+ lecture videos using OBS Studio and Canva.',
-      '**Recognition**: Received official Letter of Appreciation for e-learning development leadership.'
+      '**Documents**: View Internship Certificate (https://drive.google.com/file/d/1BvNUjNFwQWGdzMOgByMfM4w5dBot6Vu8/view?usp=sharing), View Letter of Recommendation (https://drive.google.com/file/d/1pDMxJxq0iay_v-DrX9b9o5DDTqNUOlHC/view?usp=sharing).'
     ]
   },
   kjsiti: {
     type: 'EXPERIENCE',
     title: 'KJSITI — Computer Hardware Engineer Intern',
-    summary: 'Period: Jun 2025 – Sep 2025 | Organization: K. J. Somaiya Private ITI',
+    summary: 'Period: Jun 2025 – Sep 2025 | Organization: K. J. Somaiya Private ITI (VTI)',
     details: [
       '**Hardware Diagnostics**: Assembled and upgraded high-performance PC workstations.',
-      '**Infrastructure**: Maintained campus network hardware and diagnosed system bottlenecks.'
+      '**Infrastructure**: Maintained campus network hardware and diagnosed system bottlenecks.',
+      '**Documents**: View Internship Certificate (https://drive.google.com/file/d/131jqY3wDWYNYaGTmDodgSuVxEnTbj7tO/view?usp=sharing).'
     ]
   },
   smarthire: {
@@ -133,10 +153,10 @@ const KNOWLEDGE_GRAPH: Record<string, {
   },
   rank: {
     type: 'EDUCATION',
-    title: 'Academic Merit Distinction — Rank 134th in Maharashtra',
+    title: 'Academic Merit Distinction — Rank 132nd in Maharashtra',
     summary: 'K. J. Somaiya Polytechnic | Computer Engineering Diploma 2026',
     details: [
-      '🏆 **State Merit Rank**: **Ranked 134th** in the Maharashtra State Diploma Merit List among ~68,800+ candidates.',
+      '🏆 **State Merit Rank**: **Ranked 132nd** in the Maharashtra State Diploma Merit List among ~70,000+ candidates.',
       '📊 **Final Diploma Percentage**: **97.03%**',
       '📚 **Core Mastery**: Data Structures, OOP (Java/C++), SQL, Machine Learning, Web Engineering.'
     ]
@@ -151,7 +171,7 @@ export function initRAG() {
 
 export function queryRAG(userQuery: string): string {
   if (!userQuery || !userQuery.trim()) {
-    return "👋 Hi! I'm **Nik** (Nikhilesh Chavda). Ask me about my **work experience**, **AI projects**, **diploma score & 134th rank**, or **technical skills**!";
+    return "👋 Hi! I'm **Nik** (Nikhilesh Chavda). Ask me about my **work experience**, **AI projects**, **diploma score & 132nd rank**, or **technical skills**!";
   }
 
   if (vocabulary.length === 0) {
@@ -264,16 +284,20 @@ function formatEntityResponse(entity: typeof KNOWLEDGE_GRAPH[string]): string {
 // Intent 1: Strict Experience Response (NO PROJECTS unless asked)
 function formatExperienceIntent(query: string): string {
   return "💼 **Professional Experience & Internships**\n\n" +
-    "• **EduJR — Content Writing & Email Marketing Intern** (Apr 2026 – Jun 2026)\n" +
-    "  *Promoted from Email Marketing to Content Writing after sending ~100 daily B2B outreach emails. Authored 40+ SEO blog articles.*\n\n" +
-    "• **AICTE - Edunet Foundation (Vodafone Idea Foundation) — Cybersecurity Intern** (Dec 2025 – Jan 2026)\n" +
-    "  *Built keylogger threat simulations, executed Wireshark network packet inspection, integrated AI vulnerability monitoring.*\n\n" +
-    "• **AICTE - Edunet Foundation (Microsoft) — Azure AI Intern** (2025)\n" +
-    "  *Deployed machine learning models on Microsoft Azure Cognitive Services and configured cloud infrastructure.*\n\n" +
+    "• **Fin Maverick — AI Video Generation Intern** (1 Jul 2026 – Present)\n" +
+    "  *Generated instructional/promotional videos using company-approved AI tools and workflows, performed quality checks (QC), delivered output targets, and coordinated with marketing. [View Certificate](https://drive.google.com/file/d/13X4dQ-44cNy8SjpOA-LdyqYvJs9MxGH4/view?usp=sharing) | [View LOR](https://drive.google.com/file/d/1yVU29gpxrdeMrcDB85R6Ka3HvoW6hdgp/view?usp=drive_link).*\n\n" +
+    "• **EduJR — Content Writing Intern** (28 Apr 2026 – 25 Jun 2026)\n" +
+    "  *Earned this content-writing role after outstanding performance as an Email Marketing Intern. Authored 40+ blog posts over two months. [View Certificate](https://drive.google.com/file/d/1NsVepnJgnFrQxaP_fzDiKn9NMBCGwQYx/view?usp=sharing).*\n\n" +
+    "• **EduJR — Email Marketing Intern** (04 Apr 2026 – 30 May 2026)\n" +
+    "  *Sent ~100 daily client emails, managed campaigns and B2B communications. [View Certificate](https://drive.google.com/file/d/1GDQvgmwXCb8VRLJzHByxzljd-GDLBn2Y/view?usp=sharing).*\n\n" +
+    "• **AICTE - Edunet Foundation (Vodafone Idea) — Cybersecurity Intern** (Dec 2025 – Jan 2026)\n" +
+    "  *Built keylogger threat simulations, executed network packet inspection with Wireshark, integrated AI monitoring.*\n\n" +
     "• **KJSAC — LMS Administrator & E-Content Developer** (Jul 2025 – Sep 2025)\n" +
-    "  *Administered Moodle LMS platform, produced 50+ lecture videos with OBS Studio & Canva. Awarded Letter of Appreciation.*\n\n" +
-    "• **KJSITI — Computer Hardware Engineer Intern** (Jun 2025 – Sep 2025)\n" +
-    "  *Assembled high-performance PC workstations and maintained campus network hardware infrastructure.*";
+    "  *Administered Moodle LMS platform, produced 50+ lecture videos with OBS & Canva. [View Certificate](https://drive.google.com/file/d/1BvNUjNFwQWGdzMOgByMfM4w5dBot6Vu8/view?usp=sharing) | [View LOR](https://drive.google.com/file/d/1pDMxJxq0iay_v-DrX9b9o5DDTqNUOlHC/view?usp=sharing).*\n\n" +
+    "• **VTI (K. J. Somaiya Private ITI) — Computer Hardware Engineer Intern** (Jun 2025 – Sep 2025)\n" +
+    "  *Assembled PC workstations, diagnosed hardware bottlenecks and network connectivity failures. [View Certificate](https://drive.google.com/file/d/131jqY3wDWYNYaGTmDodgSuVxEnTbj7tO/view?usp=sharing).*\n\n" +
+    "• **AICTE - Edunet Foundation (Microsoft) — Azure AI Intern** (2025)\n" +
+    "  *Deployed machine learning models on Microsoft Azure Cognitive Services and configured cloud infrastructure.*";
 }
 
 // Intent 2: Strict Projects Response
@@ -293,7 +317,7 @@ function formatEducationIntent(): string {
   return "🎓 **Education & Academic Distinction**\n\n" +
     "• **Diploma in Computer Engineering** @ K. J. Somaiya Polytechnic, Mumbai (Completed 2026)\n" +
     "• **Final Diploma Score**: **97.03%**\n" +
-    "• 🏆 **State Merit Rank**: **Ranked 134th** in the Maharashtra State Diploma Merit List among ~68,800+ candidates!\n" +
+    "• 🏆 **State Merit Rank**: **Ranked 132nd** in the Maharashtra State Diploma Merit List among ~70,000+ candidates!\n" +
     "• **Key Coursework**: Data Structures & Algorithms, OOP (Java/C++), Relational Databases (SQL), Web Technologies, Machine Learning.";
 }
 
@@ -313,7 +337,7 @@ function formatAchievementsIntent(): string {
     "• **1st Place** – AICons Competition (TechXpression 2025, KJSIT)\n" +
     "• **1st Place** – Tech Trivia & Tech Stake (Renaissance 2024, KJSIT)\n" +
     "• **Top 45** – GDG Figma UI/UX Hackathon (PixelVerse 2026, SIES GST)\n" +
-    "• **State Rank 134th** – Maharashtra Diploma Merit List (out of ~68,800 candidates, 97.03% score)\n" +
+    "• **State Rank 132nd** – Maharashtra Diploma Merit List (out of ~70,000 candidates, 97.03% score)\n" +
     "• **Certifications**: IBM Machine Learning with Python, Coursera Python Data Analysis, Microsoft Azure AI-900, Deloitte & Tata GenAI Analytics.";
 }
 
@@ -336,7 +360,7 @@ function formatGoalsIntent(): string {
 // Intent 8: Profile / About
 function formatProfileIntent(): string {
   return "👤 **About Nikhilesh Chavda**\n\n" +
-    "I'm a Full-Stack AI Engineer based in Mumbai, India. I scored **97.03%** in my Computer Engineering Diploma (Ranked **134th** in Maharashtra out of ~68,800 candidates).\n\n" +
+    "I'm a Full-Stack AI Engineer based in Mumbai, India. I scored **97.03%** in my Computer Engineering Diploma (Ranked **132nd** in Maharashtra out of ~70,000 candidates).\n\n" +
     "My mind operates as an intelligent neural matrix: combining relentless curiosity with disciplined engineering logic. I build predictive ML models, NLP pipelines, and interactive full-stack AI web applications.";
 }
 

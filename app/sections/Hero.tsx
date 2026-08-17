@@ -321,7 +321,7 @@ export default function Hero() {
           <div>
             <span className="text-zinc-500 text-[9px] uppercase tracking-wider block">MERIT RANK</span>
             <span className="text-purple-300 font-bold text-xs flex items-center gap-1 mt-0.5">
-              <Trophy className="w-3.5 h-3.5 text-purple-400" /> MH Rank 134 / 68,800+
+              <Trophy className="w-3.5 h-3.5 text-purple-400" /> MH Rank 132 / 70,000+
             </span>
           </div>
         </div>

@@ -2,7 +2,7 @@
 
 import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { Shield, Cpu, Video, Cloud, Mail, FileEdit, ExternalLink, X, Sparkles, TrendingUp } from "lucide-react";
+import { Shield, Cpu, Video, Cloud, Mail, FileEdit, ExternalLink, X, Sparkles, TrendingUp, FileText } from "lucide-react";
 import { useCentralMotion } from "../hooks/useCentralMotion";
 import Modal from "../components/Modal";
 
@@ -30,9 +30,32 @@ interface Experience {
   progressionNote?: string;
   responsibilities: string[];
   achievements: string[];
+  documents?: { label: string; url: string }[];
 }
 
 const experiences: Experience[] = [
+  {
+    id: "fin-maverick",
+    company: "Fin Maverick",
+    role: "AI Video Generation Intern",
+    period: "1 July 2026 – Present",
+    color: "#00ffff",
+    glowColor: "rgba(0, 255, 255, 0.35)",
+    icon: "Video",
+    description: "Generated instructional and promotional video assets utilizing generative AI platforms and workflows with rigorous quality control.",
+    responsibilities: [
+      "Generated instructional and promotional videos using the company's approved AI video-generation tools and workflows.",
+      "Performed quality checks on video outputs, identifying inconsistencies and errors and revising work to meet brand and content standards.",
+      "Delivered finished videos within agreed output and quality targets through a flexible, self-directed working arrangement.",
+      "Coordinated professionally with content and marketing teams to align video output with course and campaign requirements.",
+      "Demonstrated reliability, attention to detail, and strong understanding of AI-assisted video production."
+    ],
+    achievements: ["AI Video Production", "Quality Control", "Cross-team Coordination"],
+    documents: [
+      { label: "View Certificate", url: "https://drive.google.com/file/d/13X4dQ-44cNy8SjpOA-LdyqYvJs9MxGH4/view?usp=sharing" },
+      { label: "View Letter of Recommendation", url: "https://drive.google.com/file/d/1yVU29gpxrdeMrcDB85R6Ka3HvoW6hdgp/view?usp=drive_link" }
+    ]
+  },
   {
     id: "edujr-content",
     company: "EduJR",
@@ -42,15 +65,18 @@ const experiences: Experience[] = [
     color: "#ec4899",
     glowColor: "rgba(236, 72, 153, 0.35)",
     icon: "FileEdit",
-    description: "Authored high-impact SEO content and technological articles following top performance in email marketing outreach.",
-    progressionNote: "I was initially hired as an Email Marketing Intern and later received the opportunity to work as a Content Writing Intern due to my performance.",
+    description: "Authored 40+ blog posts over approximately two months, earning the content writing role due to outstanding performance as an Email Marketing Intern.",
+    progressionNote: "Earned the opportunity to take on the content-writing role after appreciable performance in the Email Marketing Intern role.",
     responsibilities: [
-      "Authored more than 40 SEO-friendly blog articles.",
-      "Researched educational and technology topics.",
-      "Improved website content quality and domain authority.",
-      "Worked closely with the marketing team to align strategy."
+      "Wrote 40+ blog posts over approximately two months.",
+      "Created written content according to company requirements and publishing standards.",
+      "Researched educational and technology topics to align with branding."
     ],
-    achievements: ["40+ Published Articles", "SEO Optimization", "Content Strategy"]
+    achievements: ["40+ Published Articles", "SEO Optimization", "Internal Promotion"],
+    documents: [
+      { label: "View Certificate", url: "https://drive.google.com/file/d/1NsVepnJgnFrQxaP_fzDiKn9NMBCGwQYx/view?usp=sharing" },
+      { label: "Company Website", url: "https://edujr.com/" }
+    ]
   },
   {
     id: "edujr-email",
@@ -61,32 +87,72 @@ const experiences: Experience[] = [
     color: "#f59e0b",
     glowColor: "rgba(245, 158, 11, 0.35)",
     icon: "Mail",
-    description: "Executed daily high-volume client outreach and B2B communication campaigns for educational growth.",
-    progressionNote: "Demonstrated high outreach consistency leading to internal promotion into Content Writing.",
+    description: "Managed high-volume daily outreach sending approximately 100 personalized professional client emails.",
     responsibilities: [
-      "Sent approximately 100 professional outreach emails daily.",
-      "Communicated with prospective clients and educational institutions.",
-      "Maintained outreach quality, accuracy, and brand consistency.",
-      "Assisted in campaign execution and prospective client engagement.",
-      "Developed advanced professional communication and sales conversion skills."
+      "Sent approximately 100 client emails daily.",
+      "Worked on professional email marketing campaigns and client communication.",
+      "Demonstrated strong performance and reliability during the role."
     ],
-    achievements: ["~100 Daily Outreach Emails", "B2B Communication", "Campaign Management"]
+    achievements: ["~100 Daily Emails", "Campaign Delivery", "Client Communication"],
+    documents: [
+      { label: "View Certificate", url: "https://drive.google.com/file/d/1GDQvgmwXCb8VRLJzHByxzljd-GDLBn2Y/view?usp=sharing" },
+      { label: "Company Website", url: "https://edujr.com/" }
+    ]
   },
   {
     id: "aicte-cyber",
     company: "AICTE - Edunet Foundation (Vodafone)",
     role: "Cybersecurity Intern",
-    period: "2025 – 2026",
+    period: "Dec 2025 – Jan 2026",
     color: "#00ffff",
     glowColor: "rgba(0, 255, 255, 0.35)",
     icon: "Shield",
-    description: "Built keylogger-based security projects and integrated AI for threat simulation.",
+    description: "Built keylogger threat simulations, executed Wireshark network packet inspection, and integrated AI models for vulnerability assessment.",
     responsibilities: [
-      "Developed keylogger detection & prevention modules.",
-      "Executed network packet analysis and vulnerability assessment.",
-      "Integrated AI models for automated threat simulation."
+      "Built keylogger threat simulation projects.",
+      "Executed network packet inspection with Wireshark.",
+      "Integrated AI models for vulnerability assessment and automated threat monitoring."
     ],
     achievements: ["Packet analysis", "Threat simulation"]
+  },
+  {
+    id: "kjsac-lms",
+    company: "K. J. Somaiya Arts & Commerce (KJSAC)",
+    role: "LMS Administrator & E-Content Developer",
+    period: "July 2025 – September 2025",
+    color: "#10b981",
+    glowColor: "rgba(16, 185, 129, 0.35)",
+    icon: "Video",
+    description: "Administered LMS platform and developed e-content, editing 50+ lecture videos, and receiving a formal Letter of Appreciation.",
+    responsibilities: [
+      "Administered Moodle LMS platform, managing courses, users, and system roles.",
+      "Produced and edited 50+ recorded lecture videos using OBS Studio and Canva.",
+      "Mentored student interns and coordinated platform content deployment."
+    ],
+    achievements: ["50+ lecture videos", "LMS optimization", "Letter of Appreciation"],
+    documents: [
+      { label: "View Internship Certificate", url: "https://drive.google.com/file/d/1BvNUjNFwQWGdzMOgByMfM4w5dBot6Vu8/view?usp=sharing" },
+      { label: "View Letter of Recommendation", url: "https://drive.google.com/file/d/1pDMxJxq0iay_v-DrX9b9o5DDTqNUOlHC/view?usp=sharing" }
+    ]
+  },
+  {
+    id: "kjsiti-hardware",
+    company: "K. J. Somaiya Private Industrial Training Institute (VTI)",
+    role: "Computer Hardware Engineer Intern",
+    period: "June 2025 – September 2025",
+    color: "#a855f7",
+    glowColor: "rgba(168, 85, 247, 0.35)",
+    icon: "Cpu",
+    description: "Assembled computer systems, performed diagnostics, and maintained network infrastructure.",
+    responsibilities: [
+      "Assembled and benchmarked PC workstations.",
+      "Diagnosed hardware failures and network connectivity bottlenecks.",
+      "Maintained IT setup and diagnostics across campus systems."
+    ],
+    achievements: ["Hardware troubleshooting", "System diagnostics"],
+    documents: [
+      { label: "View Internship Certificate", url: "https://drive.google.com/file/d/131jqY3wDWYNYaGTmDodgSuVxEnTbj7tO/view?usp=sharing" }
+    ]
   },
   {
     id: "aicte-azure",
@@ -102,36 +168,6 @@ const experiences: Experience[] = [
       "Utilized Azure cloud resources for scalable data processing."
     ],
     achievements: ["Azure Fundamentals", "Cognitive Services"]
-  },
-  {
-    id: "kjsac-lms",
-    company: "KJSAC",
-    role: "LMS Admin & Content",
-    period: "2025",
-    color: "#10b981",
-    glowColor: "rgba(16, 185, 129, 0.35)",
-    icon: "Video",
-    description: "Managed LMS platform and created educational content using OBS and Canva.",
-    responsibilities: [
-      "Produced and optimized 50+ recorded lecture videos.",
-      "Administered LMS platform users, roles, and content deployment."
-    ],
-    achievements: ["50+ lecture videos", "LMS optimization"]
-  },
-  {
-    id: "kjsiti-hardware",
-    company: "K. J. Somaiya ITI",
-    role: "Hardware Engineer Intern",
-    period: "2025",
-    color: "#a855f7",
-    glowColor: "rgba(168, 85, 247, 0.35)",
-    icon: "Cpu",
-    description: "Assembled computer systems and diagnosed hardware issues across campus infrastructure.",
-    responsibilities: [
-      "Assembled and benchmarked PC workstations.",
-      "Diagnosed hardware failures and network connectivity bottlenecks."
-    ],
-    achievements: ["Hardware troubleshooting", "System diagnostics"]
   }
 ];
 
@@ -275,6 +311,24 @@ export default function ExperienceTimeline() {
                         {exp.description}
                       </p>
 
+                      {/* Compact Document Buttons */}
+                      {exp.documents && (
+                        <div className="flex flex-wrap gap-2 mb-4 justify-start md:group-hover:opacity-100" onClick={(e) => e.stopPropagation()}>
+                          {exp.documents.map((doc, idx) => (
+                            <a
+                              key={idx}
+                              href={doc.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/5 hover:bg-cyan-500/10 border border-white/10 hover:border-cyan-500/30 text-zinc-300 hover:text-cyan-400 font-mono text-[10px] transition-all duration-300"
+                            >
+                              <FileText className="w-3 h-3 text-cyan-400" />
+                              {doc.label}
+                            </a>
+                          ))}
+                        </div>
+                      )}
+
                       <div className={`flex items-center justify-between pt-4 border-t border-white/5 font-mono text-xs text-zinc-500 ${isEven ? "md:flex-row-reverse" : ""}`}>
                         <span>{exp.period}</span>
                         <span className="text-cyan-400 group-hover:translate-x-1 transition-transform inline-flex items-center gap-1 font-bold">
@@ -374,6 +428,27 @@ export default function ExperienceTimeline() {
                   ))}
                 </ul>
               </div>
+
+              {/* Supporting Documents Button Grid inside Modal */}
+              {selectedExp.documents && (
+                <div>
+                  <h4 className="text-xs font-mono uppercase text-zinc-500 tracking-widest mb-3 font-bold">Supporting Documents</h4>
+                  <div className="flex flex-wrap gap-3">
+                    {selectedExp.documents.map((doc, idx) => (
+                      <a
+                        key={idx}
+                        href={doc.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 hover:bg-cyan-500/10 border border-white/10 hover:border-cyan-500/30 text-zinc-200 hover:text-cyan-400 font-mono text-xs transition-all duration-300"
+                      >
+                        <FileText className="w-4 h-4 text-cyan-400" />
+                        {doc.label}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               <div>
                 <h4 className="text-xs font-mono uppercase text-zinc-500 tracking-widest mb-3 font-bold">Key Highlights & Impact</h4>
