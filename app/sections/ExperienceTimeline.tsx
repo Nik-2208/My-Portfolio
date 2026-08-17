@@ -38,7 +38,7 @@ const experiences: Experience[] = [
     id: "fin-maverick",
     company: "Fin Maverick",
     role: "AI Video Generation Intern",
-    period: "1 July 2026 – Present",
+    period: "1 July 2026 – 1 August 2026",
     color: "#00ffff",
     glowColor: "rgba(0, 255, 255, 0.35)",
     icon: "Video",
