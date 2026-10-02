@@ -114,10 +114,10 @@ export async function POST(req: NextRequest) {
         docId = docRef.id;
         console.log(`[Contact API] Message stored in Firestore with ID: ${docId}`);
       } catch (dbErr) {
-        console.error("[Contact API] Firestore save error:", dbErr);
+        console.warn("[Contact API] Firestore save failed (failing soft to email dispatch):", dbErr);
       }
     } else {
-      console.warn("[Contact API] Firestore Admin DB not available. Skipping DB write.");
+      console.log("[Contact API] Firestore Admin DB not available. Proceeding directly with email notification.");
     }
 
     // 4. Attempt Email Dispatch (Resend -> Nodemailer fallback)
@@ -129,6 +129,7 @@ export async function POST(req: NextRequest) {
       userAgent,
       createdAt: createdAtISO,
     });
+    console.log(`[Contact API] Email notification dispatch status: ${emailSent ? "SUCCESS" : "FAILED"}`);
 
     // 5. Update Firestore record with final status if doc was created
     if (db && docId) {
@@ -139,7 +140,7 @@ export async function POST(req: NextRequest) {
           updatedAt: FieldValue.serverTimestamp(),
         });
       } catch (updateErr) {
-        console.error("[Contact API] Firestore status update error:", updateErr);
+        console.warn("[Contact API] Firestore status update error (non-fatal):", updateErr);
       }
     }
 

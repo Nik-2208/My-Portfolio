@@ -298,30 +298,30 @@ export default function Hero() {
         transition={{ duration: 0.8, delay: 0.2 }}
         className="hidden lg:flex flex-col gap-3 absolute left-8 top-1/2 -translate-y-1/2 z-20 font-mono text-[11px] text-zinc-400"
       >
-        <div className="p-4 rounded-2xl border border-white/10 bg-[#050608]/80 backdrop-blur-xl space-y-3 w-48 shadow-xl">
+        <div className="p-4 rounded-2xl border border-white/10 bg-[#050608]/90 backdrop-blur-xl space-y-3 w-52 shadow-2xl">
           <div className="flex items-center justify-between border-b border-white/10 pb-2">
-            <span className="text-cyan-400 font-bold flex items-center gap-1.5"><Cpu className="w-3.5 h-3.5" /> SYS_V6</span>
+            <span className="text-cyan-400 font-bold flex items-center gap-1.5"><Cpu className="w-3.5 h-3.5" /> SYS_V7.0</span>
             <span className="text-[9px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-bold">ONLINE</span>
           </div>
 
           <div>
-            <span className="text-zinc-500 text-[9px] uppercase tracking-wider block">LOCATION</span>
+            <span className="text-zinc-500 text-[9px] uppercase tracking-wider block">CURRENT EDUCATION</span>
             <span className="text-white flex items-center gap-1 text-xs font-sans font-medium mt-0.5">
-              <MapPin className="w-3.5 h-3.5 text-cyan-400" /> Mumbai, India
+              <GraduationCap className="w-3.5 h-3.5 text-cyan-400 flex-shrink-0" /> SPIT • SY B.Tech CE
             </span>
           </div>
 
           <div>
-            <span className="text-zinc-500 text-[9px] uppercase tracking-wider block">DIPLOMA SCORE</span>
+            <span className="text-zinc-500 text-[9px] uppercase tracking-wider block">COMPLETED DIPLOMA</span>
             <span className="text-cyan-300 font-bold text-xs flex items-center gap-1 mt-0.5">
-              <GraduationCap className="w-3.5 h-3.5" /> 97.03%
+              <span>97.03% (Rank 132/70k+)</span>
             </span>
           </div>
 
           <div>
-            <span className="text-zinc-500 text-[9px] uppercase tracking-wider block">MERIT RANK</span>
-            <span className="text-purple-300 font-bold text-xs flex items-center gap-1 mt-0.5">
-              <Trophy className="w-3.5 h-3.5 text-purple-400" /> MH Rank 132 / 70,000+
+            <span className="text-zinc-500 text-[9px] uppercase tracking-wider block">LOCATION</span>
+            <span className="text-zinc-300 flex items-center gap-1 text-xs font-sans mt-0.5">
+              <MapPin className="w-3.5 h-3.5 text-purple-400" /> Mumbai, India
             </span>
           </div>
         </div>
@@ -332,44 +332,60 @@ export default function Hero() {
         initial={{ opacity: 0, x: 30 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, delay: 0.2 }}
-        className="hidden lg:flex flex-col gap-3 absolute right-8 top-1/2 -translate-y-1/2 z-20"
+        className="hidden lg:flex flex-col gap-3 absolute right-8 top-1/2 -translate-y-1/2 z-20 font-mono text-xs"
       >
+        <a
+          href="https://drive.google.com/file/d/1bMLgf8vuixWyW-fTRGxj06Ev_FtU1KjF/view?usp=sharing"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-12 h-12 rounded-2xl border border-cyan-500/40 bg-[#050608]/90 backdrop-blur-xl flex items-center justify-center text-cyan-400 hover:bg-cyan-500/20 hover:scale-110 hover:shadow-[0_0_20px_rgba(0,255,255,0.4)] transition-all duration-300 group relative"
+          aria-label="Download Resume"
+          title="Download Resume PDF"
+        >
+          <FileText className="w-5 h-5 group-hover:scale-110 transition-transform" />
+          <span className="absolute right-14 px-2.5 py-1 rounded-lg bg-black/90 border border-cyan-500/40 text-cyan-300 text-[10px] font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap shadow-lg">
+            Resume
+          </span>
+        </a>
+
         <a
           href="https://github.com/Nik-2208"
           target="_blank"
           rel="noopener noreferrer"
-          className="w-11 h-11 rounded-2xl border border-white/10 bg-[#050608]/80 backdrop-blur-xl flex items-center justify-center text-zinc-400 hover:text-cyan-400 hover:border-cyan-400/50 hover:shadow-[0_0_15px_rgba(0,255,255,0.3)] transition-all duration-300 group"
-          title="GitHub"
+          className="w-12 h-12 rounded-2xl border border-white/20 bg-[#050608]/90 backdrop-blur-xl flex items-center justify-center text-white hover:text-cyan-400 hover:border-cyan-400/60 hover:scale-110 hover:shadow-[0_0_20px_rgba(0,255,255,0.3)] transition-all duration-300 group relative"
+          aria-label="GitHub Profile"
+          title="GitHub Profile"
         >
-          <Github className="w-4 h-4 group-hover:scale-110 transition-transform" />
+          <Github className="w-5 h-5 group-hover:scale-110 transition-transform" />
+          <span className="absolute right-14 px-2.5 py-1 rounded-lg bg-black/90 border border-white/20 text-white text-[10px] font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap shadow-lg">
+            GitHub
+          </span>
         </a>
 
         <a
           href="https://www.linkedin.com/in/nikhilesh-chavda-2b779533a/"
           target="_blank"
           rel="noopener noreferrer"
-          className="w-11 h-11 rounded-2xl border border-white/10 bg-[#050608]/80 backdrop-blur-xl flex items-center justify-center text-zinc-400 hover:text-blue-400 hover:border-blue-400/50 hover:shadow-[0_0_15px_rgba(0,102,255,0.3)] transition-all duration-300 group"
-          title="LinkedIn"
+          className="w-12 h-12 rounded-2xl border border-blue-500/40 bg-[#050608]/90 backdrop-blur-xl flex items-center justify-center text-blue-400 hover:bg-blue-500/20 hover:scale-110 hover:shadow-[0_0_20px_rgba(56,189,248,0.4)] transition-all duration-300 group relative"
+          aria-label="LinkedIn Profile"
+          title="LinkedIn Profile"
         >
-          <Linkedin className="w-4 h-4 group-hover:scale-110 transition-transform" />
+          <Linkedin className="w-5 h-5 group-hover:scale-110 transition-transform" />
+          <span className="absolute right-14 px-2.5 py-1 rounded-lg bg-black/90 border border-blue-500/40 text-blue-300 text-[10px] font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap shadow-lg">
+            LinkedIn
+          </span>
         </a>
 
         <a
           href="mailto:nikhileshchavdawork@gmail.com"
-          className="w-11 h-11 rounded-2xl border border-white/10 bg-[#050608]/80 backdrop-blur-xl flex items-center justify-center text-zinc-400 hover:text-purple-400 hover:border-purple-400/50 hover:shadow-[0_0_15px_rgba(168,85,247,0.3)] transition-all duration-300 group"
-          title="Email"
+          className="w-12 h-12 rounded-2xl border border-purple-500/40 bg-[#050608]/90 backdrop-blur-xl flex items-center justify-center text-purple-400 hover:bg-purple-500/20 hover:scale-110 hover:shadow-[0_0_20px_rgba(168,85,247,0.4)] transition-all duration-300 group relative"
+          aria-label="Email Nik"
+          title="Direct Email"
         >
-          <Mail className="w-4 h-4 group-hover:scale-110 transition-transform" />
-        </a>
-
-        <a
-          href="https://drive.google.com/file/d/1bMLgf8vuixWyW-fTRGxj06Ev_FtU1KjF/view?usp=sharing"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="w-11 h-11 rounded-2xl border border-white/10 bg-[#050608]/80 backdrop-blur-xl flex items-center justify-center text-zinc-400 hover:text-pink-400 hover:border-pink-400/50 hover:shadow-[0_0_15px_rgba(236,72,153,0.3)] transition-all duration-300 group"
-          title="Resume"
-        >
-          <FileText className="w-4 h-4 group-hover:scale-110 transition-transform" />
+          <Mail className="w-5 h-5 group-hover:scale-110 transition-transform" />
+          <span className="absolute right-14 px-2.5 py-1 rounded-lg bg-black/90 border border-purple-500/40 text-purple-300 text-[10px] font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap shadow-lg">
+            Email
+          </span>
         </a>
       </motion.div>
 

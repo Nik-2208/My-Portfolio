@@ -11,20 +11,54 @@ export const knowledgeBase: KnowledgeChunk[] = [
     id: "profile-main",
     section: "Identity Profile",
     category: "profile",
-    content: "Hi! I'm Nikhilesh Chavda — a Full-Stack AI Engineer, fast learner, and disciplined thinker based in Mumbai, India. My mindset operates as an intelligent neural matrix: connecting human curiosity with disciplined machine execution. I build predictive ML models, NLP pipelines, and AI applications that solve real-world problems. I am passionate about AI engineering, high-performance UI design, and continuous learning."
+    content: "Hi! I'm Nikhilesh Chavda — a Full-Stack AI Engineer and Computer Engineering student at Sardar Patel Institute of Technology (SPIT), Mumbai. My mindset operates as an intelligent neural matrix: connecting human curiosity with disciplined machine execution. I build distributed networking systems, neural typing engines, life gamification RPG platforms (ASCENDRA), and predictive ML applications that solve real-world problems."
   },
   {
     id: "profile-goals",
     section: "Career Goals & Ambitions",
     category: "profile",
-    content: "My career goal is to become an award-winning AI Engineer and Frontend Architect, building impactful generative AI agents, predictive systems, and intelligent human-computer interfaces. I am actively seeking AI/ML engineering opportunities, internships, and collaborative research projects."
+    content: "My career goal is to become an award-winning AI Engineer and Systems Architect, building impactful generative AI agents, distributed protocols, and intelligent human-computer interfaces. I am actively seeking AI/ML engineering opportunities, internships, and collaborative research projects."
+  },
+  {
+    id: "education-current",
+    section: "Current Education — SPIT Mumbai",
+    category: "education",
+    content: "Current Education: Sardar Patel Institute of Technology (SPIT), Mumbai — one of Mumbai's leading engineering institutes. Currently pursuing: SY B.Tech (Second Year) in Computer Engineering through the Direct Second Year pathway (2026 – 2029). Core Focus: Advanced Computer Architecture, Operating Systems, Machine Learning, and Distributed Systems."
   },
   {
     id: "education-diploma",
-    section: "Education & Academic Distinction",
+    section: "Completed Education — Diploma Distinction",
     category: "education",
-    content: "Diploma in Computer Engineering at K. J. Somaiya Polytechnic, Mumbai. Completed: 2026. Final Diploma Percentage: 97.03%. 🏆 Academic Merit Rank: Ranked 132nd in the Maharashtra State Diploma Merit List among approximately 70,000+ candidates across the state."
+    content: "Completed Education: Diploma in Computer Engineering at K. J. Somaiya Polytechnic, Mumbai. Completed: 2026. Final Diploma Percentage: 97.03%. 🏆 Academic Merit Rank: Ranked 132nd in the All India / Maharashtra State Diploma Merit List among approximately 70,000+ candidates across the state."
   },
+  {
+    id: "education-school",
+    section: "Completed Education — Secondary School",
+    category: "education",
+    content: "Completed Secondary Education: P. G. Garodia School, Mumbai (ICSE Board). Final Board Percentage: 93.4% with distinction."
+  },
+
+  // Major Flagship Projects
+  {
+    id: "project-antwire",
+    section: "Major Project 01 — ANTWIRE",
+    category: "projects",
+    content: "Project 01: ANTWIRE — Extensible Computational Ant-Brain & Superorganism Platform. Concept: An extensible computational ant-brain, individual-ant organism, and colony/superorganism simulation platform combining computational neurobiology with multi-agent reinforcement learning. Architecture: Canonical ~55K-neuron computational ant-brain topology, isolated per-ant runtime, Gym-style MDP API, 14-dimensional observation system, 6-channel pheromone diffusion stigmergy, emergent division of labor, and real-time causal tracing. Pipeline: Ant Brain Model → Isolated Ant Runtime → Sensory/Motor System → Task Environment → Learning → Pheromones → Colony Behavior → World → Neural Inspection. Tech Stack: TypeScript, React, Node.js, Computational Neuroscience, LIF Spiking Neural Models, Multi-Agent RL, Pheromone Simulation, Gym MDPs. Live Demo: https://antwire.vercel.app | Repository: https://github.com/Nik-2208/AntWire"
+  },
+  {
+    id: "project-ant-brain-keyboard",
+    section: "Major Project 02 — ANT BRAIN KEYBOARD",
+    category: "projects",
+    content: "Project 02: ANT BRAIN KEYBOARD — Biologically Inspired Multi-Agent Learning. Concept: A biologically informed ant-brain simulation that takes a real-life-inspired ant brain model as its computational substrate, trains individual ants or colonies to operate a keyboard, and demonstrates how biologically inspired neural architectures can learn and coordinate control tasks. Architecture: Ant-6DCT model with 128 LIF spiking neurons, 256 directed synapses, 14 sensory channels, 12 neuropil regions, spatial memory, reward-modulated plasticity, and 4 motor actions. Stored as a compact ~38 KiB .antbrain package. Tech Stack: Python, Spiking Neural Networks (LIF), Multi-Agent RL, Neuropil Circuits, Pheromone Dynamics. Live Demo: https://ant-brain-keyboard.vercel.app"
+  },
+  {
+    id: "project-ascendra",
+    section: "Major Project 03 — ASCENDRA (Flagship Major Project)",
+    category: "projects",
+    content: "Project 03: ASCENDRA — \"Life, turned into an RPG.\" Concept: A web-based Life RPG transforming real-world self-improvement into RPG character progression. Real activities (studying, coding, fitness, focus, habits, meditation, brain training, productivity) contribute to an evolving RPG hero. Systems: XP Engine, Skills & Attributes, Quests & Boss Battles, World Progression, Brain Lab, Streaks & Resilience, Campaigns, Inventory, Chronicles, Ascension. Tech Stack: Next.js 16, React 19, TypeScript, Prisma ORM, PostgreSQL, Auth.js, Server Actions, Event-Driven Gameplay. Live Demo: https://ascendra-game.vercel.app"
+  },
+
+  // Experience
   {
     id: "experience-fin-maverick",
     section: "Fin Maverick - AI Video Generation Intern",
@@ -68,7 +102,19 @@ export const knowledgeBase: KnowledgeChunk[] = [
     content: "Role: Hardware Engineer Intern at K. J. Somaiya Private Industrial Training Institute (VTI). Period: Jun 2025 – Sep 2025. Responsibilities: Assembled high-performance PC workstations, diagnosed hardware failures and network bottlenecks. Documents: View Internship Certificate (https://drive.google.com/file/d/131jqY3wDWYNYaGTmDodgSuVxEnTbj7tO/view?usp=sharing)."
   },
 
-  // Projects
+  // Additional Spatial AI Modules
+  {
+    id: "project-smarthire-ai",
+    section: "SmartHire AI",
+    category: "projects",
+    content: "Project Name: SmartHire AI. Purpose: AI-powered hiring assistant for resume parsing, candidate scoring, and automated interview screening. Tech Stack: Python, NLP, Machine Learning, Streamlit. Features: TF-IDF candidate matching, skill gap analysis. Live Demo: https://hire-smart-ai.streamlit.app/"
+  },
+  {
+    id: "project-netsec-ai",
+    section: "NetSec AI",
+    category: "projects",
+    content: "Project Name: NetSec AI. Purpose: Network Intrusion Detection System using machine learning for detecting malicious packet anomalies. Tech Stack: Python, Cybersecurity, Scikit-learn, Wireshark, Streamlit. Features: 20% detection boost, real-time alert logs. Live Demo: https://netsec-ai.streamlit.app/"
+  },
   {
     id: "project-personalized-learner",
     section: "Personalized Learning Dashboard",
@@ -82,34 +128,10 @@ export const knowledgeBase: KnowledgeChunk[] = [
     content: "Project Name: AI Event Planner. Purpose: Intelligent system for automated event scheduling, budget allocation, and vendor selection. Tech Stack: Python, NLP, Streamlit, Scikit-learn. Features: Natural language event input, automated agenda generation. Live Demo: https://aieventplanner.streamlit.app/"
   },
   {
-    id: "project-smarthire-ai",
-    section: "SmartHire AI",
+    id: "project-smart-aqi-predictor",
+    section: "Smart AQI Predictor",
     category: "projects",
-    content: "Project Name: SmartHire AI. Purpose: AI-powered hiring assistant for resume parsing, candidate scoring, and automated interview screening. Tech Stack: Python, NLP, Machine Learning, Streamlit. Features: TF-IDF candidate matching, skill gap analysis. Live Demo: https://hire-smart-ai.streamlit.app/"
-  },
-  {
-    id: "project-creativity-predictor",
-    section: "Creativity Predictor",
-    category: "projects",
-    content: "Project Name: Creativity Predictor. Purpose: Evaluates creative writing and problem-solving metrics using text analytics. Tech Stack: Python, NLP, ML, Streamlit. Features: Semantic scoring, text sentiment analysis. Live Demo: https://creativity-predictor.streamlit.app/"
-  },
-  {
-    id: "project-digit-identifier",
-    section: "Digit Identifier",
-    category: "projects",
-    content: "Project Name: Digit Identifier. Purpose: Real-time handwritten digit recognition using neural networks. Tech Stack: Python, Neural Networks, OpenCV, Streamlit. Features: Canvas drawing interface, real-time prediction confidence. Live Demo: https://digit-identifier.streamlit.app/"
-  },
-  {
-    id: "project-ai-energy-predictor",
-    section: "AI Energy Predictor",
-    category: "projects",
-    content: "Project Name: AI Energy Predictor. Purpose: Predicts household energy consumption based on weather data and historical usage. Tech Stack: Python, ML, Regression Models, Streamlit. Features: Load forecasting, energy efficiency tips. Live Demo: https://ai-energy-predictor.streamlit.app/"
-  },
-  {
-    id: "project-netsec-ai",
-    section: "NetSec AI",
-    category: "projects",
-    content: "Project Name: NetSec AI. Purpose: Network Intrusion Detection System using machine learning for detecting malicious packet anomalies. Tech Stack: Python, Cybersecurity, Scikit-learn, Wireshark, Streamlit. Features: 20% detection boost, real-time alert logs. Live Demo: https://netsec-ai.streamlit.app/"
+    content: "Project Name: Smart AQI Predictor. Purpose: Forecasts Air Quality Index using environmental telemetry data. Tech Stack: Python, ML, Pandas, NumPy, Streamlit. Features: Real-time AQI breakdown, health warnings. Live Demo: https://smart-aqi-predictor.streamlit.app/"
   },
   {
     id: "project-recipe-predictor",
@@ -118,16 +140,28 @@ export const knowledgeBase: KnowledgeChunk[] = [
     content: "Project Name: Recipe Predictor. Purpose: Recommends gourmet recipes based on available kitchen ingredients using TF-IDF vectorization. Tech Stack: Python, NLP, TF-IDF, Logistic Regression, Streamlit. Features: Dietary filtering, ingredient matching. Live Demo: https://recipro.streamlit.app/"
   },
   {
+    id: "project-digit-identifier",
+    section: "Digit Identifier",
+    category: "projects",
+    content: "Project Name: Digit Identifier. Purpose: Real-time handwritten digit recognition using neural networks. Tech Stack: Python, Neural Networks, OpenCV, Streamlit. Features: Canvas drawing interface, real-time prediction confidence. Live Demo: https://digit-identifier.streamlit.app/"
+  },
+  {
+    id: "project-creativity-predictor",
+    section: "Creativity Predictor",
+    category: "projects",
+    content: "Project Name: Creativity Predictor. Purpose: Evaluates creative writing and problem-solving metrics using text analytics. Tech Stack: Python, NLP, ML, Streamlit. Features: Semantic scoring, text sentiment analysis. Live Demo: https://creativity-predictor.streamlit.app/"
+  },
+  {
+    id: "project-ai-energy-predictor",
+    section: "AI Energy Predictor",
+    category: "projects",
+    content: "Project Name: AI Energy Predictor. Purpose: Predicts household energy consumption based on weather data and historical usage. Tech Stack: Python, ML, Regression Models, Streamlit. Features: Load forecasting, energy efficiency tips. Live Demo: https://ai-energy-predictor.streamlit.app/"
+  },
+  {
     id: "project-sleep-insight-engine",
     section: "Sleep Insight Engine",
     category: "projects",
     content: "Project Name: Sleep Insight Engine. Purpose: Analyzes sleep metrics to provide personalized circadian health insights. Tech Stack: Python, Data Science, Matplotlib, Pandas, Streamlit. Features: Sleep stage visualization, fatigue prevention tips. Live Demo: https://sleep-insight-engine.streamlit.app/"
-  },
-  {
-    id: "project-smart-aqi-predictor",
-    section: "Smart AQI Predictor",
-    category: "projects",
-    content: "Project Name: Smart AQI Predictor. Purpose: Forecasts Air Quality Index using environmental telemetry data. Tech Stack: Python, ML, Pandas, NumPy, Streamlit. Features: Real-time AQI breakdown, health warnings. Live Demo: https://smart-aqi-predictor.streamlit.app/"
   },
 
   // Skills
@@ -135,7 +169,7 @@ export const knowledgeBase: KnowledgeChunk[] = [
     id: "skills-programming",
     section: "Programming Languages",
     category: "skills",
-    content: "Languages: Python, Java, C, C++, SQL, JavaScript, HTML5, CSS3, Dart, Flutter."
+    content: "Languages: Python, Java, C, C++, SQL, TypeScript, JavaScript, HTML5, CSS3, Dart, Flutter."
   },
   {
     id: "skills-aiml",
@@ -145,9 +179,9 @@ export const knowledgeBase: KnowledgeChunk[] = [
   },
   {
     id: "skills-databases-cloud",
-    section: "Databases & Cloud Infrastructure",
+    section: "Databases & Full-Stack Cloud",
     category: "skills",
-    content: "Databases & Cloud: MySQL, Firebase Firestore, Supabase, Microsoft Azure, Vercel, Streamlit Cloud."
+    content: "Databases & Full-Stack Cloud: PostgreSQL, Prisma ORM, MySQL, Firebase Firestore, Supabase, Auth.js, Microsoft Azure, Vercel, Streamlit Cloud."
   },
   {
     id: "skills-devtools-design",
@@ -161,7 +195,7 @@ export const knowledgeBase: KnowledgeChunk[] = [
     id: "achievements-list",
     section: "Achievements & Awards",
     category: "achievements",
-    content: "🏆 1st Place – AICons Competition (TechXpression 2025, KJSIT). 🥇 1st Place – Tech Trivia & Tech Stake (Renaissance 2024, KJSIT). 🎯 Top 45 – GDG Figma UI/UX Hackathon (PixelVerse 2026, SIES GST). 🎖️ Rank 132nd in Maharashtra Diploma Merit List (out of ~70,000 candidates)."
+    content: "🏆 1st Place – AICons Competition (TechXpression 2025, KJSIT). 🥇 1st Place – Tech Trivia & Tech Stake (Renaissance 2024, KJSIT). 🎯 Top 45 – GDG Figma UI/UX Hackathon (PixelVerse 2026, SIES GST). 🎖️ Rank 132nd in All India / Maharashtra Diploma Merit List (out of ~70,000 candidates with 97.03% score)."
   },
   {
     id: "certifications-list",
@@ -173,9 +207,9 @@ export const knowledgeBase: KnowledgeChunk[] = [
   // Contact & Social
   {
     id: "contact-info",
-    section: "Contact Information & Social Links",
+    section: "Contact Information, Social Links & Resume",
     category: "contact",
-    content: "Email: nikhileshchavdawork@gmail.com | Phone: 8928027482 | Location: Mumbai, Maharashtra, India. LinkedIn: https://www.linkedin.com/in/nikhilesh-chavda-2b779533a/ | GitHub: https://github.com/Nik-2208 | Portfolio: https://nikhileshchavda.com"
+    content: "Email: nikhileshchavdawork@gmail.com | Phone: +91 8928027482 | Location: Mumbai, Maharashtra, India. Resume: https://drive.google.com/file/d/1bMLgf8vuixWyW-fTRGxj06Ev_FtU1KjF/view?usp=sharing | LinkedIn: https://www.linkedin.com/in/nikhilesh-chavda-2b779533a/ | GitHub: https://github.com/Nik-2208 | Portfolio: https://nikhileshchavda.com"
   },
 
   // FAQs
@@ -183,6 +217,6 @@ export const knowledgeBase: KnowledgeChunk[] = [
     id: "faq-hire",
     section: "Why Hire Nik?",
     category: "faq",
-    content: "Why Hire Nik? I combine a top 0.2% academic rank (97.03% diploma, 132nd state rank) with proven practical execution across 10+ deployed AI/ML Streamlit applications, industry internship experience (Content Writing, Email Marketing, Cybersecurity, Azure AI), and relentless problem-solving discipline."
+    content: "Why Hire Nik? I am currently pursuing SY B.Tech in Computer Engineering at SPIT Mumbai after securing Rank 132 (out of 70,000+ candidates, 97.03% score) in my Diploma. I combine elite academic rigor with proven engineering execution: 3 Major Flagship Projects (01 ANTWIRE, 02 ANT BRAIN KEYBOARD, 03 ASCENDRA Life RPG) alongside 10+ deployed AI/ML systems and multiple industry internships."
   }
 ];

@@ -43,6 +43,11 @@ const TYPO_MAP: Record<string, string> = {
   workplace: 'experience',
   employers: 'company',
   employer: 'company',
+  ascedra: 'ascendra',
+  ascend: 'ascendra',
+  antwiree: 'antwire',
+  wire: 'antwire',
+  rpg: 'ascendra',
 };
 
 // --- 3. Knowledge Graph Entity Relationships ---
@@ -52,6 +57,78 @@ const KNOWLEDGE_GRAPH: Record<string, {
   summary: string;
   details: string[];
 }> = {
+  spit: {
+    type: 'EDUCATION',
+    title: 'Sardar Patel Institute of Technology (SPIT) — Current Education',
+    summary: 'SY B.Tech in Computer Engineering | Direct Second Year Pathway (2026 – 2029)',
+    details: [
+      '🏛️ **Institution**: Sardar Patel Institute of Technology (SPIT), Mumbai — one of Mumbai\'s leading engineering institutes.',
+      '🎓 **Current Status**: Enrolled in Second Year (SY) B.Tech in Computer Engineering via Direct Second Year.',
+      '📚 **Focus Areas**: Advanced Computer Architecture, Operating Systems, Distributed Systems, Machine Learning & Algorithms.',
+      '📜 **Prior Academic Foundation**: Completed Diploma in Computer Engineering at K. J. Somaiya Polytechnic (Final Score: 97.03%, Rank 132 in Maharashtra).'
+    ]
+  },
+  sardar: {
+    type: 'EDUCATION',
+    title: 'Sardar Patel Institute of Technology (SPIT) — Current Education',
+    summary: 'SY B.Tech in Computer Engineering | Direct Second Year Pathway (2026 – 2029)',
+    details: [
+      '🏛️ **Institution**: Sardar Patel Institute of Technology (SPIT), Mumbai — one of Mumbai\'s leading engineering institutes.',
+      '🎓 **Current Status**: Enrolled in Second Year (SY) B.Tech in Computer Engineering via Direct Second Year.',
+      '📚 **Focus Areas**: Advanced Computer Architecture, Operating Systems, Distributed Systems, Machine Learning & Algorithms.',
+      '📜 **Prior Academic Foundation**: Completed Diploma in Computer Engineering at K. J. Somaiya Polytechnic (Final Score: 97.03%, Rank 132 in Maharashtra).'
+    ]
+  },
+  ascendra: {
+    type: 'PROJECTS',
+    title: '03 — ASCENDRA: Life, turned into an RPG',
+    summary: 'Flagship Major Project | Web-based Life RPG Platform',
+    details: [
+      '⚔️ **Core Concept**: Transforms real-world self-improvement (studying, coding, fitness, focus, habits, meditation, brain training, productivity, goal completion) into RPG character progression.',
+      '🎮 **Game Systems**: Centralized XP & Level Engine, Skill Tree & Hero Attributes (Intelligence, Strength, Focus, Creativity), Quests & Boss Battles, World & Villages Progression, Brain Lab, Streaks & Resilience, Campaigns, Inventory & Virtual Economy, Chronicles, Ascension / Prestige.',
+      '🛠️ **Technical Engineering**: Built on Next.js 16 (App Router), React 19, TypeScript, Prisma ORM, PostgreSQL, Auth.js, Server Actions, Event-Driven Gameplay, and Database-Authoritative State Management.',
+      '🔗 **Live Demo**: [ascendra-game.vercel.app](https://ascendra-game.vercel.app) | **Repository**: [GitHub](https://github.com/Nik-2208)'
+    ]
+  },
+  antwire: {
+    type: 'PROJECTS',
+    title: '01 — ANTWIRE',
+    summary: 'Extensible Computational Ant-Brain & Superorganism Platform',
+    details: [
+      '🧠 **Computational Neurobiology**: Canonical ~55K-neuron computational ant-brain topology with isolated per-ant runtime (private synapses, activation states, plasticity & memory).',
+      '🎯 **Task Environment API**: Gym-style `observe → act → reward → next observation → done` MDP loop with 14-dimensional sensory observation system and motor steering/grasping.',
+      '🧬 **Stigmergy & Superorganism**: 6-channel pheromone diffusion/decay dynamics and emergent colony division of labor (foraging, excavation, nursing, patrolling, living bridges).',
+      '🔍 **Neural Inspection & Causal Tracing**: Real-time \'Why did the ant do that?\' diagnostics with 3D neuropil atlas and neural-spike raster plots.',
+      '💻 **Tech Stack**: TypeScript, React, Node.js, Computational Neuroscience, LIF Spiking Neurons, Multi-Agent RL, Pheromone Simulation, Gym MDPs.',
+      '🔗 **Live Demo**: [antwire.vercel.app](https://antwire.vercel.app) | **Repository**: [AntWire on GitHub](https://github.com/Nik-2208/AntWire)'
+    ]
+  },
+  antbrain: {
+    type: 'PROJECTS',
+    title: '02 — ANT BRAIN KEYBOARD',
+    summary: 'Biologically Inspired Multi-Agent Learning & Spiking Neural Simulation',
+    details: [
+      '🧠 **Biologically Informed Model**: Simulates an Ant-6DCT brain architecture with 128 LIF spiking neurons, 256 directed synapses, 14 sensory channels, and 12 neuropil-inspired regions.',
+      '🐜 **Multi-Agent Keyboard Control**: Trains individual ants and colonies to operate a keyboard via 4 motor actions (FORWARD, TURN_LEFT, TURN_RIGHT, INTERACT/PRESS).',
+      '🧬 **Colony Coordination**: Features pheromone-based communication, spatial/path memory, and reward-modulated synaptic plasticity.',
+      '⚙️ **Compact Computational Package**: ~38 KiB reproducible .antbrain model package structurally audited for synthetic RL experiments.',
+      '💻 **Tech Stack**: Python, Spiking Neural Networks (LIF), Multi-Agent RL, Neuropil Circuits, Pheromone Dynamics.',
+      '🔗 **Live Demo**: [ant-brain-keyboard.vercel.app](https://ant-brain-keyboard.vercel.app) | **Repository**: [GitHub](https://github.com/Nik-2208)'
+    ]
+  },
+  keyboard: {
+    type: 'PROJECTS',
+    title: '02 — ANT BRAIN KEYBOARD',
+    summary: 'Biologically Inspired Multi-Agent Learning & Spiking Neural Simulation',
+    details: [
+      '🧠 **Biologically Informed Model**: Simulates an Ant-6DCT brain architecture with 128 LIF spiking neurons, 256 directed synapses, 14 sensory channels, and 12 neuropil-inspired regions.',
+      '🐜 **Multi-Agent Keyboard Control**: Trains individual ants and colonies to operate a keyboard via 4 motor actions (FORWARD, TURN_LEFT, TURN_RIGHT, INTERACT/PRESS).',
+      '🧬 **Colony Coordination**: Features pheromone-based communication, spatial/path memory, and reward-modulated synaptic plasticity.',
+      '⚙️ **Compact Computational Package**: ~38 KiB reproducible .antbrain model package structurally audited for synthetic RL experiments.',
+      '💻 **Tech Stack**: Python, Spiking Neural Networks (LIF), Multi-Agent RL, Neuropil Circuits, Pheromone Dynamics.',
+      '🔗 **Live Demo**: [ant-brain-keyboard.vercel.app](https://ant-brain-keyboard.vercel.app) | **Repository**: [GitHub](https://github.com/Nik-2208)'
+    ]
+  },
   finmaverick: {
     type: 'EXPERIENCE',
     title: 'Fin Maverick — AI Video Generation Intern',
@@ -160,6 +237,17 @@ const KNOWLEDGE_GRAPH: Record<string, {
       '📊 **Final Diploma Percentage**: **97.03%**',
       '📚 **Core Mastery**: Data Structures, OOP (Java/C++), SQL, Machine Learning, Web Engineering.'
     ]
+  },
+  resume: {
+    type: 'CONTACT',
+    title: 'Official Resume & Credentials',
+    summary: 'Nikhilesh H. Chavda — Full-Stack AI Engineer',
+    details: [
+      '📄 **Download Official Resume**: [Google Drive Resume PDF](https://drive.google.com/file/d/1bMLgf8vuixWyW-fTRGxj06Ev_FtU1KjF/view?usp=sharing)',
+      '📬 **Email**: nikhileshchavdawork@gmail.com',
+      '💼 **LinkedIn**: https://www.linkedin.com/in/nikhilesh-chavda-2b779533a/',
+      '🐙 **GitHub**: https://github.com/Nik-2208'
+    ]
   }
 };
 
@@ -171,7 +259,7 @@ export function initRAG() {
 
 export function queryRAG(userQuery: string): string {
   if (!userQuery || !userQuery.trim()) {
-    return "👋 Hi! I'm **Nik** (Nikhilesh Chavda). Ask me about my **work experience**, **AI projects**, **diploma score & 132nd rank**, or **technical skills**!";
+    return "👋 Hi! I'm **Nik** (Nikhilesh Chavda). Ask me about my **SPIT B.Tech studies**, **major projects (ANTWIRE, ANT BRAIN, ASCENDRA)**, **work experience**, **diploma score & 132nd rank**, or **technical skills**!";
   }
 
   if (vocabulary.length === 0) {
@@ -242,17 +330,17 @@ function classifyIntent(query: string, entityIntent?: IntentType): IntentType {
   }
 
   // Projects Intent
-  if (query.match(/\b(project|projects|built|developed|created|app|apps|application|applications|repo|repository|github|system|systems|portfolio)\b/i)) {
+  if (query.match(/\b(project|projects|built|developed|created|app|apps|application|applications|repo|repository|github|system|systems|portfolio|ascendra|antwire|antbrain|keyboard)\b/i)) {
     return 'PROJECTS';
   }
 
   // Education Intent
-  if (query.match(/\b(education|study|studied|college|polytechnic|diploma|score|marks|rank|merit|percentage|gpa|cgpa|somaiya|school|97\.03%)\b/i)) {
+  if (query.match(/\b(education|study|studied|studying|degree|btech|b\.tech|current education|spit|sardar patel|college|polytechnic|diploma|score|marks|rank|merit|percentage|gpa|cgpa|somaiya|school|97\.03%)\b/i)) {
     return 'EDUCATION';
   }
 
   // Skills Intent
-  if (query.match(/\b(skill|skills|know|expertise|tech stack|language|languages|framework|frameworks|library|libraries|tool|tools|technology|technologies|programming|python|java|sql|c\+\+|streamlit|scikit|pandas|numpy|react|next|docker|figma)\b/i)) {
+  if (query.match(/\b(skill|skills|know|expertise|tech stack|language|languages|framework|frameworks|library|libraries|tool|tools|technology|technologies|programming|python|java|sql|c\+\+|typescript|prisma|postgres|react|next|docker|figma)\b/i)) {
     return 'SKILLS';
   }
 
@@ -261,8 +349,8 @@ function classifyIntent(query: string, entityIntent?: IntentType): IntentType {
     return 'ACHIEVEMENTS';
   }
 
-  // Contact Info
-  if (query.match(/\b(contact|email|phone|reach|linkedin|social|connect|location|address)\b/i)) {
+  // Contact / Resume Info
+  if (query.match(/\b(contact|email|phone|reach|linkedin|social|connect|location|address|resume|cv|download resume)\b/i)) {
     return 'CONTACT';
   }
 
@@ -281,7 +369,7 @@ function formatEntityResponse(entity: typeof KNOWLEDGE_GRAPH[string]): string {
     entity.details.map(d => `• ${d}`).join('\n');
 }
 
-// Intent 1: Strict Experience Response (NO PROJECTS unless asked)
+// Intent 1: Strict Experience Response
 function formatExperienceIntent(query: string): string {
   return "💼 **Professional Experience & Internships**\n\n" +
     "• **Fin Maverick — AI Video Generation Intern** (1 Jul 2026 – Present)\n" +
@@ -300,35 +388,35 @@ function formatExperienceIntent(query: string): string {
     "  *Deployed machine learning models on Microsoft Azure Cognitive Services and configured cloud infrastructure.*";
 }
 
-// Intent 2: Strict Projects Response
+// Intent 2: Strict Projects Response (Sequence: 01 ANTWIRE -> 02 ANT BRAIN -> 03 ASCENDRA)
 function formatProjectsIntent(query: string): string {
-  return "🚀 **Featured AI Projects & Systems**\n\n" +
-    "I have engineered and deployed 10+ spatial AI modules on Streamlit Cloud:\n\n" +
-    "• **SmartHire AI**: AI resume matching & candidate screening system (Python, TF-IDF, Streamlit)\n" +
-    "• **NetSec AI**: Machine learning network intrusion detection system (20% detection boost, Wireshark)\n" +
-    "• **Personalized Learning Dashboard**: Predictive student performance analytics (Scikit-Learn, Streamlit)\n" +
-    "• **AI Event Planner**: Automated event scheduling & vendor management (NLP, Python)\n" +
-    "• **Smart AQI Predictor**: Environmental air quality forecasting dashboard (ML, Pandas)\n" +
-    "• **Recipe Predictor** & **Digit Identifier**: Computer vision & ingredient recommendation systems.";
+  return "🚀 **Major Projects Sequence & Engineering Systems**\n\n" +
+    "My primary projects follow an intentional sequence of increasingly ambitious engineering:\n\n" +
+    "• **01 — ANTWIRE**: Extensible computational ant-brain and superorganism simulation platform combining spiking neural models (~55K neurons), multi-agent RL, 6-channel pheromone stigmergy, and real-time neural causal tracing ([Live Demo](https://antwire.vercel.app) | [GitHub](https://github.com/Nik-2208/AntWire); TypeScript, React, Node.js, LIF SNNs, Gym MDPs).\n\n" +
+    "• **02 — ANT BRAIN KEYBOARD**: Biologically inspired ant-brain simulation training individual & collaborative ants to operate a keyboard using spiking neural dynamics (128 LIF neurons, 256 synapses), spatial memory, reward-based learning, and pheromone coordination ([Live Demo](https://ant-brain-keyboard.vercel.app) | [GitHub](https://github.com/Nik-2208); Python, LIF SNNs, Multi-Agent RL).\n\n" +
+    "• **03 — ASCENDRA (Flagship Major Project)**: *\"Life, turned into an RPG.\"* A web-based Life RPG transforming real-world self-improvement into character progression (XP engine, skill trees, quests, boss battles, world progression, brain lab, chronicles, ascension) ([Live Demo](https://ascendra-game.vercel.app) | [GitHub](https://github.com/Nik-2208); Next.js 16, React 19, TypeScript, Prisma, PostgreSQL, Auth.js, Server Actions).\n\n" +
+    "**Additional Spatial AI Modules**:\n" +
+    "• **SmartHire AI** (Resume parsing & screening), **NetSec AI** (Network intrusion detection), **Personalized Learning Dashboard**, **AI Event Planner**, **Smart AQI Predictor**, **Recipe Predictor** & **Digit Identifier**.";
 }
 
-// Intent 3: Strict Education Response
+// Intent 3: Strict Education Response (SPIT Current + Somaiya Completed)
 function formatEducationIntent(): string {
-  return "🎓 **Education & Academic Distinction**\n\n" +
-    "• **Diploma in Computer Engineering** @ K. J. Somaiya Polytechnic, Mumbai (Completed 2026)\n" +
-    "• **Final Diploma Score**: **97.03%**\n" +
-    "• 🏆 **State Merit Rank**: **Ranked 132nd** in the Maharashtra State Diploma Merit List among ~70,000+ candidates!\n" +
-    "• **Key Coursework**: Data Structures & Algorithms, OOP (Java/C++), Relational Databases (SQL), Web Technologies, Machine Learning.";
+  return "🎓 **Education Hierarchy & Academic Distinction**\n\n" +
+    "• **CURRENT EDUCATION**: **Sardar Patel Institute of Technology (SPIT)**, Mumbai\n" +
+    "  *Degree: **SY B.Tech in Computer Engineering** (Direct Second Year Pathway, 2026 – 2029). One of Mumbai's leading engineering institutes.*\n\n" +
+    "• **COMPLETED EDUCATION**: **K. J. Somaiya Polytechnic**, Mumbai (Completed: 2026)\n" +
+    "  *Degree: Diploma in Computer Engineering — Final Score: **97.03%** | 🏆 **All India / State Merit Rank: 132 among 70,000+ candidates**.*\n\n" +
+    "• **COMPLETED SCHOOLING**: **P. G. Garodia School** (ICSE Board — **93.4%** Distinction).";
 }
 
 // Intent 4: Skills Response
 function formatSkillsIntent(query: string): string {
   return "🛠️ **Technical Skill Matrix**\n\n" +
-    "• **Programming Languages**: Python (Primary), Java, C, C++, SQL, JavaScript, HTML5, CSS3, Dart\n" +
+    "• **Languages**: TypeScript, JavaScript, Python (Primary), Java, C, C++, SQL, HTML5, CSS3, Dart\n" +
+    "• **Full-Stack & Systems**: Next.js 16, React 19, Prisma ORM, PostgreSQL, Auth.js, Server Actions, WebRTC, WebSockets, TailwindCSS, Framer Motion\n" +
     "• **AI & ML**: Scikit-Learn, Pandas, NumPy, Matplotlib, NLP, TF-IDF, Gemini API, Claude, Azure Cognitive Services\n" +
-    "• **Databases & Cloud**: MySQL, Firebase Firestore, Supabase, Microsoft Azure, Vercel\n" +
-    "• **Developer Tools & Design**: Git, GitHub, Docker, n8n Automation, Figma (Top 45 Rank), Canva, OBS Studio\n" +
-    "• **Frontend Engines**: Next.js 16, React 19, TailwindCSS, Framer Motion, GSAP.";
+    "• **Databases & Cloud**: PostgreSQL, MySQL, Firebase Firestore, Supabase, Microsoft Azure, Vercel, Streamlit Cloud\n" +
+    "• **Developer Tools**: Git, GitHub, Docker, n8n Automation, Figma, Canva, OBS Studio.";
 }
 
 // Intent 5: Achievements & Certifications Response
@@ -337,31 +425,32 @@ function formatAchievementsIntent(): string {
     "• **1st Place** – AICons Competition (TechXpression 2025, KJSIT)\n" +
     "• **1st Place** – Tech Trivia & Tech Stake (Renaissance 2024, KJSIT)\n" +
     "• **Top 45** – GDG Figma UI/UX Hackathon (PixelVerse 2026, SIES GST)\n" +
-    "• **State Rank 132nd** – Maharashtra Diploma Merit List (out of ~70,000 candidates, 97.03% score)\n" +
+    "• **All India Merit Rank 132** – Maharashtra Diploma Merit List (out of ~70,000 candidates with 97.03% score)\n" +
     "• **Certifications**: IBM Machine Learning with Python, Coursera Python Data Analysis, Microsoft Azure AI-900, Deloitte & Tata GenAI Analytics.";
 }
 
-// Intent 6: Contact Response
+// Intent 6: Contact & Resume Response
 function formatContactIntent(): string {
-  return "📬 **Get In Touch With Nik**\n\n" +
-    "• **Email**: [nikhileshchavdawork@gmail.com](mailto:nikhileshchavdawork@gmail.com)\n" +
-    "• **Phone**: +91 8928027482\n" +
-    "• **Location**: Mumbai, Maharashtra, India\n" +
-    "• **LinkedIn**: [Nikhilesh Chavda on LinkedIn](https://www.linkedin.com/in/nikhilesh-chavda-2b779533a/)\n" +
-    "• **GitHub**: [Nik-2208 on GitHub](https://github.com/Nik-2208)";
+  return "📬 **Get In Touch & Candidate Dossier**\n\n" +
+    "• 📄 **Resume PDF**: [Download Official Resume](https://drive.google.com/file/d/1bMLgf8vuixWyW-fTRGxj06Ev_FtU1KjF/view?usp=sharing)\n" +
+    "• 📧 **Email**: [nikhileshchavdawork@gmail.com](mailto:nikhileshchavdawork@gmail.com)\n" +
+    "• 📞 **Phone**: +91 8928027482\n" +
+    "• 📍 **Location**: Mumbai, Maharashtra, India\n" +
+    "• 💼 **LinkedIn**: [Nikhilesh Chavda on LinkedIn](https://www.linkedin.com/in/nikhilesh-chavda-2b779533a/)\n" +
+    "• 🐙 **GitHub**: [Nik-2208 on GitHub](https://github.com/Nik-2208)";
 }
 
 // Intent 7: Career Goals
 function formatGoalsIntent(): string {
   return "🎯 **Career Ambitions & Vision**\n\n" +
-    "My goal is becoming a world-class AI Engineer and Frontend Architect, building impactful generative AI agents, predictive ML systems, and high-performance human-computer interfaces. I am actively seeking AI/ML engineering opportunities and research projects.";
+    "My goal is becoming a world-class AI Engineer and Systems Architect, building impactful generative AI agents, distributed protocols, and life-gamification ecosystems like ASCENDRA. I am actively seeking high-impact software engineering opportunities and research collaborations.";
 }
 
 // Intent 8: Profile / About
 function formatProfileIntent(): string {
-  return "👤 **About Nikhilesh Chavda**\n\n" +
-    "I'm a Full-Stack AI Engineer based in Mumbai, India. I scored **97.03%** in my Computer Engineering Diploma (Ranked **132nd** in Maharashtra out of ~70,000 candidates).\n\n" +
-    "My mind operates as an intelligent neural matrix: combining relentless curiosity with disciplined engineering logic. I build predictive ML models, NLP pipelines, and interactive full-stack AI web applications.";
+  return "👤 **About Nikhilesh H. Chavda**\n\n" +
+    "I'm a Full-Stack AI Engineer and Computer Engineering student at **Sardar Patel Institute of Technology (SPIT)**, Mumbai (Direct Second Year). Previously, I achieved **Rank 132 out of 70,000+ candidates (97.03%)** in my Computer Engineering Diploma at K. J. Somaiya Polytechnic.\n\n" +
+    "I build ambitious systems including **01 ANTWIRE** (Distributed P2P Protocol), **02 ANT BRAIN KEYBOARD** (Biologically Inspired Multi-Agent Ant Simulation), and **03 ASCENDRA** (Life RPG Platform).";
 }
 
 // Vector Search Fallback (Only used if no explicit intent matched)

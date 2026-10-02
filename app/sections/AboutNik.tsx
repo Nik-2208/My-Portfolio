@@ -42,8 +42,8 @@ export default function AboutNik() {
                   <GraduationCap className="w-5 h-5 text-purple-400" />
                 </div>
                 <div className="min-w-0">
-                  <span className="text-zinc-500 text-[10px] uppercase tracking-widest block">Education</span>
-                  <span className="text-zinc-300 text-sm font-medium truncate">K. J. Somaiya Polytechnic</span>
+                  <span className="text-zinc-500 text-[10px] uppercase tracking-widest block">Current Education</span>
+                  <span className="text-zinc-300 text-sm font-medium truncate">SPIT • SY B.Tech CE</span>
                 </div>
               </div>
             </div>

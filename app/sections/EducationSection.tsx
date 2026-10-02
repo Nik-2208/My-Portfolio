@@ -2,70 +2,84 @@
 
 import React, { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
-import { GraduationCap, School, Trophy, Award, CheckCircle2, TrendingUp, BookOpen } from "lucide-react";
+import { GraduationCap, School, Trophy, Award, CheckCircle2, TrendingUp, BookOpen, Sparkles, Building2 } from "lucide-react";
 import { useCentralMotion } from "../hooks/useCentralMotion";
-
-const IconMap = {
-  GraduationCap,
-  School,
-  Trophy,
-  Award,
-} as const;
-
-type IconKey = keyof typeof IconMap;
 
 interface EducationData {
   id: string;
+  status: "CURRENT" | "COMPLETED";
   institution: string;
   location?: string;
   degree: string;
+  pathway?: string;
   period: string;
-  score: string;
-  scoreLabel: string;
+  score?: string;
+  scoreLabel?: string;
   highlight?: string;
   rankBadge?: string;
+  description: string;
   stats?: { label: string; value: string }[];
   color: string;
   glowColor: string;
-  icon: IconKey;
 }
 
-const educationData: EducationData[] = [
+const currentEducation: EducationData = {
+  id: "spit-btech",
+  status: "CURRENT",
+  institution: "Sardar Patel Institute of Technology (SPIT)",
+  location: "Mumbai, India",
+  degree: "SY B.Tech — Computer Engineering",
+  pathway: "Direct Second Year",
+  period: "Currently Pursuing • 2026 – 2029",
+  description: "Pursuing Bachelor of Technology in Computer Engineering via Direct Second Year at Sardar Patel Institute of Technology, one of Mumbai's leading engineering institutes. Focusing on advanced computing, distributed architectures, algorithms, and AI systems.",
+  stats: [
+    { label: "Degree Program", value: "B.Tech" },
+    { label: "Branch", value: "Computer Engg." },
+    { label: "Pathway", value: "Direct 2nd Year" },
+    { label: "Institute", value: "SPIT Mumbai" },
+  ],
+  color: "#00f0ff",
+  glowColor: "rgba(0, 240, 255, 0.3)",
+};
+
+const completedEducations: EducationData[] = [
   {
-    id: "diploma",
+    id: "diploma-kjsp",
+    status: "COMPLETED",
     institution: "K. J. Somaiya Polytechnic",
     location: "Mumbai",
     degree: "Diploma in Computer Engineering",
     period: "Completed: 2026",
     score: "97.03%",
     scoreLabel: "Final Diploma Percentage",
-    highlight: "🏆 Ranked 132nd in the Maharashtra Diploma Merit List among approximately 70,000+ candidates.",
-    rankBadge: "State Rank 132 / 70k",
+    highlight: "🏆 Ranked 132nd in the Maharashtra State Diploma Merit List among approximately 70,000+ candidates.",
+    rankBadge: "All India / State Rank 132 / 70k+",
+    description: "Completed Diploma in Computer Engineering with top-tier distinction, establishing mastery in core computer science, programming, databases, and machine learning.",
     stats: [
       { label: "Final Percentage", value: "97.03%" },
       { label: "Maharashtra Rank", value: "#132" },
-      { label: "Candidate Pool", value: "~70,000" },
+      { label: "Candidate Pool", value: "70,000+" },
       { label: "Merit Percentile", value: "Top 0.19%" },
     ],
-    color: "#00ffff",
-    glowColor: "rgba(0, 255, 255, 0.25)",
-    icon: "GraduationCap",
+    color: "#a855f7",
+    glowColor: "rgba(168, 85, 247, 0.25)",
   },
   {
-    id: "school",
+    id: "school-garodia",
+    status: "COMPLETED",
     institution: "P. G. Garodia School",
-    location: "ICSE",
-    degree: "Secondary Education (ICSE Board)",
+    location: "ICSE Board",
+    degree: "Secondary Education (ICSE)",
     period: "Completed",
     score: "93.4%",
     scoreLabel: "Final Board Percentage",
-    color: "#a855f7",
-    glowColor: "rgba(168, 85, 247, 0.25)",
-    icon: "School",
+    description: "Completed ICSE secondary education with high distinction, building strong mathematical and analytical foundations.",
+    color: "#ec4899",
+    glowColor: "rgba(236, 72, 153, 0.25)",
   },
 ];
 
-// Lightweight Confetti Particle Canvas for first reveal
+// Lightweight Confetti Particle Canvas for merit card
 function ConfettiCanvas({ active }: { active: boolean }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -92,13 +106,13 @@ function ConfettiCanvas({ active }: { active: boolean }) {
 
     const colors = ["#00ffff", "#a855f7", "#ffd700", "#38bdf8", "#ec4899"];
 
-    for (let i = 0; i < 40; i++) {
+    for (let i = 0; i < 35; i++) {
       particles.push({
         x: canvas.width / 2 + (Math.random() - 0.5) * 150,
         y: canvas.height * 0.4 + (Math.random() - 0.5) * 50,
-        vx: (Math.random() - 0.5) * 5,
-        vy: -Math.random() * 4 - 2,
-        size: Math.random() * 5 + 3,
+        vx: (Math.random() - 0.5) * 4,
+        vy: -Math.random() * 3 - 2,
+        size: Math.random() * 4 + 3,
         color: colors[Math.floor(Math.random() * colors.length)],
         rotation: Math.random() * Math.PI * 2,
         vRot: (Math.random() - 0.5) * 0.15,
@@ -116,9 +130,9 @@ function ConfettiCanvas({ active }: { active: boolean }) {
       particles.forEach((p) => {
         p.x += p.vx;
         p.y += p.vy;
-        p.vy += 0.1;
+        p.vy += 0.08;
         p.rotation += p.vRot;
-        if (elapsed > 1400) {
+        if (elapsed > 1200) {
           p.alpha = Math.max(0, p.alpha - 0.02);
         }
 
@@ -131,7 +145,7 @@ function ConfettiCanvas({ active }: { active: boolean }) {
         ctx.restore();
       });
 
-      if (elapsed < 2800) {
+      if (elapsed < 2400) {
         animationFrameId = requestAnimationFrame(render);
       }
     };
@@ -199,18 +213,18 @@ export default function EducationSection() {
         >
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-cyan-500/20 bg-cyan-500/5 backdrop-blur-md mb-4 text-xs font-mono text-cyan-400 uppercase tracking-widest">
             <BookOpen className="w-3.5 h-3.5" />
-            <span>AI Knowledge Archive & Excellence</span>
+            <span>Academic Foundations & Progression</span>
           </div>
 
           <h2 className="text-4xl md:text-7xl font-bold text-white tracking-tighter uppercase">
-            Academic <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-500">Archive</span>
+            Education <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-500">Timeline</span>
           </h2>
           <p className="mt-4 text-zinc-400 text-sm md:text-base max-w-xl mx-auto font-mono">
-            Computer engineering foundation grounded in technical mastery and state-level competitive rank.
+            Structured academic journey bridging elite polytechnic distinction to B.Tech Computer Engineering.
           </p>
         </motion.div>
 
-        {/* Animated Circuit Node Background */}
+        {/* Animated Circuit Line */}
         <div className="relative">
           <svg
             className="absolute inset-0 w-full h-full pointer-events-none opacity-25 overflow-visible hidden md:block"
@@ -233,133 +247,193 @@ export default function EducationSection() {
             />
           </svg>
 
-          {/* Cards Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 relative z-10 items-start">
-            {/* Main Diploma Feature Card (7 cols) */}
+          <div className="space-y-8 relative z-10">
+            {/* 1. CURRENT EDUCATION: SPIT B.Tech (Flagship Card) */}
             <motion.div
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.8 }}
-              className="lg:col-span-7 relative group"
+              className="relative group rounded-3xl p-8 md:p-10 border border-cyan-400/40 bg-gradient-to-b from-zinc-950/95 via-cyan-950/20 to-black backdrop-blur-xl shadow-[0_0_40px_rgba(0,240,255,0.12)] hover:border-cyan-400/80 transition-all duration-500 overflow-hidden"
             >
-              <ConfettiCanvas active={hasRevealed && !isLowPerformance} />
+              {/* Subtle top indicator */}
+              <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent" />
 
-              <div className="relative p-8 md:p-10 rounded-3xl border border-cyan-500/30 bg-gradient-to-b from-zinc-950/90 via-zinc-900/60 to-black backdrop-blur-xl transition-all duration-500 hover:border-cyan-400/60 hover:shadow-[0_0_50px_rgba(0,255,255,0.15)] overflow-hidden">
-                <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
-                  <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 rounded-2xl flex items-center justify-center bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 shadow-[0_0_20px_rgba(0,255,255,0.2)]">
-                      <GraduationCap className="w-8 h-8" />
+              <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+                <div className="flex items-center gap-4">
+                  <div className="w-14 h-14 rounded-2xl flex items-center justify-center bg-cyan-500/10 border border-cyan-500/40 text-cyan-400 shadow-[0_0_25px_rgba(0,240,255,0.25)] flex-shrink-0">
+                    <Building2 className="w-8 h-8" />
+                  </div>
+                  <div>
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 font-mono text-xs font-bold mb-1">
+                      <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+                      <span>CURRENT EDUCATION • ENROLLED</span>
                     </div>
-                    <div>
-                      <span className="text-cyan-400 font-mono text-xs uppercase tracking-widest font-bold">
-                        {educationData[0].period}
+                    <h3 className="text-2xl md:text-3xl font-bold text-white uppercase tracking-tight">
+                      {currentEducation.institution}
+                    </h3>
+                    <p className="text-zinc-400 text-xs font-mono">{currentEducation.location}</p>
+                  </div>
+                </div>
+
+                <div className="px-4 py-2 rounded-2xl bg-cyan-500/10 border border-cyan-400/30 text-cyan-300 font-mono text-xs font-bold">
+                  <span>{currentEducation.pathway}</span>
+                </div>
+              </div>
+
+              <div className="mb-6">
+                <h4 className="text-xl md:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-200 to-cyan-400 mb-2">
+                  {currentEducation.degree}
+                </h4>
+                <p className="text-zinc-300 text-sm md:text-base leading-relaxed font-sans max-w-4xl">
+                  {currentEducation.description}
+                </p>
+              </div>
+
+              {/* Statistics / Highlights */}
+              {currentEducation.stats && (
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 bg-black/70 rounded-2xl border border-cyan-500/20">
+                  {currentEducation.stats.map((st) => (
+                    <div key={st.label} className="text-center p-3 rounded-xl bg-white/5 border border-white/5">
+                      <span className="block text-zinc-400 text-[10px] uppercase font-mono tracking-wider mb-1">
+                        {st.label}
                       </span>
-                      <h3 className="text-2xl md:text-3xl font-bold text-white uppercase tracking-tight">
-                        {educationData[0].institution}
-                      </h3>
-                      <p className="text-zinc-400 text-xs font-mono">{educationData[0].location}</p>
+                      <span className="text-sm md:text-base font-bold font-mono text-cyan-400">{st.value}</span>
                     </div>
-                  </div>
-
-                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-amber-500/20 via-yellow-500/15 to-cyan-500/20 border border-amber-400/40 text-amber-300 font-mono text-xs font-bold shadow-[0_0_15px_rgba(245,158,11,0.2)] animate-pulse">
-                    <Trophy className="w-4 h-4 text-yellow-400" />
-                    <span>{educationData[0].rankBadge}</span>
-                  </div>
+                  ))}
                 </div>
+              )}
+            </motion.div>
 
-                <div className="mb-6">
-                  <h4 className="text-xl md:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-200 to-cyan-400">
-                    {educationData[0].degree}
-                  </h4>
-                </div>
+            {/* 2. COMPLETED EDUCATION: Diploma & School Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+              {/* Diploma Card (7 cols) */}
+              <motion.div
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.8 }}
+                className="lg:col-span-7 relative group"
+              >
+                <ConfettiCanvas active={hasRevealed && !isLowPerformance} />
 
-                {/* Premium Glowing Merit Card */}
-                {educationData[0].highlight && (
-                  <motion.div
-                    initial={{ scale: 0.95, opacity: 0 }}
-                    whileInView={{ scale: 1, opacity: 1 }}
-                    transition={{ delay: 0.2, duration: 0.6 }}
-                    className="mb-8 p-5 rounded-2xl bg-gradient-to-r from-amber-950/40 via-yellow-900/20 to-zinc-900/80 border border-amber-500/30 shadow-[0_0_30px_rgba(245,158,11,0.1)] relative overflow-hidden"
-                  >
-                    <div className="relative z-10 flex items-start gap-4">
-                      <div className="p-2.5 rounded-xl bg-amber-500/20 border border-amber-400/40 text-yellow-300 flex-shrink-0">
-                        <Award className="w-6 h-6" />
+                <div className="relative p-8 md:p-10 rounded-3xl border border-purple-500/30 bg-gradient-to-b from-zinc-950/90 via-zinc-900/60 to-black backdrop-blur-xl transition-all duration-500 hover:border-purple-400/60 hover:shadow-[0_0_50px_rgba(168,85,247,0.15)] overflow-hidden">
+                  <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+                    <div className="flex items-center gap-4">
+                      <div className="w-14 h-14 rounded-2xl flex items-center justify-center bg-purple-500/10 border border-purple-500/30 text-purple-400 shadow-[0_0_20px_rgba(168,85,247,0.2)]">
+                        <GraduationCap className="w-8 h-8" />
                       </div>
                       <div>
-                        <div className="text-amber-400 text-xs font-mono font-bold uppercase tracking-widest mb-1 flex items-center gap-1.5">
-                          <TrendingUp className="w-3.5 h-3.5" />
-                          State Level Distinction
+                        <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-300 font-mono text-[11px] font-bold mb-1">
+                          <CheckCircle2 className="w-3 h-3 text-purple-400" />
+                          <span>COMPLETED EDUCATION</span>
                         </div>
-                        <p className="text-amber-100 text-sm md:text-base font-semibold leading-relaxed">
-                          {educationData[0].highlight}
-                        </p>
+                        <h3 className="text-2xl md:text-3xl font-bold text-white uppercase tracking-tight">
+                          {completedEducations[0].institution}
+                        </h3>
+                        <p className="text-zinc-400 text-xs font-mono">{completedEducations[0].location}</p>
                       </div>
                     </div>
-                  </motion.div>
-                )}
 
-                {/* Statistics Grid */}
-                {educationData[0].stats && (
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 bg-black/60 rounded-2xl border border-white/10">
-                    {educationData[0].stats.map((st) => (
-                      <div key={st.label} className="text-center p-3 rounded-xl bg-white/5 border border-white/5">
-                        <span className="block text-zinc-400 text-[10px] uppercase font-mono tracking-wider mb-1">
-                          {st.label}
-                        </span>
-                        <span className="text-lg md:text-xl font-bold font-mono text-cyan-400">{st.value}</span>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </motion.div>
-
-            {/* School Card (5 cols) */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.8, delay: 0.15 }}
-              className="lg:col-span-5 relative"
-            >
-              <div className="h-full p-8 md:p-10 rounded-3xl border border-purple-500/20 bg-gradient-to-b from-zinc-950/90 via-zinc-900/50 to-black backdrop-blur-xl transition-all duration-500 hover:border-purple-400/50 hover:shadow-[0_0_40px_rgba(168,85,247,0.15)] flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="w-14 h-14 rounded-2xl flex items-center justify-center bg-purple-500/10 border border-purple-500/30 text-purple-400 shadow-[0_0_20px_rgba(168,85,247,0.2)]">
-                      <School className="w-8 h-8" />
+                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-amber-500/20 via-yellow-500/15 to-purple-500/20 border border-amber-400/40 text-amber-300 font-mono text-xs font-bold shadow-[0_0_15px_rgba(245,158,11,0.2)]">
+                      <Trophy className="w-4 h-4 text-yellow-400" />
+                      <span>{completedEducations[0].rankBadge}</span>
                     </div>
-                    <span className="text-purple-400 font-mono text-xs uppercase tracking-widest px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20">
-                      ICSE Distinction
-                    </span>
                   </div>
 
-                  <span className="text-zinc-500 font-mono text-xs uppercase tracking-widest block mb-1">
-                    {educationData[1].period}
-                  </span>
-                  <h3 className="text-2xl font-bold text-white uppercase tracking-tight mb-2">
-                    {educationData[1].institution}
-                  </h3>
-                  <p className="text-purple-300 font-mono text-sm uppercase tracking-wide mb-6">
-                    {educationData[1].degree}
-                  </p>
+                  <div className="mb-6">
+                    <h4 className="text-xl md:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-purple-200 to-purple-400">
+                      {completedEducations[0].degree}
+                    </h4>
+                  </div>
+
+                  {/* Premium Glowing Merit Card */}
+                  {completedEducations[0].highlight && (
+                    <motion.div
+                      initial={{ scale: 0.95, opacity: 0 }}
+                      whileInView={{ scale: 1, opacity: 1 }}
+                      transition={{ delay: 0.2, duration: 0.6 }}
+                      className="mb-8 p-5 rounded-2xl bg-gradient-to-r from-amber-950/40 via-yellow-900/20 to-zinc-900/80 border border-amber-500/30 shadow-[0_0_30px_rgba(245,158,11,0.1)] relative overflow-hidden"
+                    >
+                      <div className="relative z-10 flex items-start gap-4">
+                        <div className="p-2.5 rounded-xl bg-amber-500/20 border border-amber-400/40 text-yellow-300 flex-shrink-0">
+                          <Award className="w-6 h-6" />
+                        </div>
+                        <div>
+                          <div className="text-amber-400 text-xs font-mono font-bold uppercase tracking-widest mb-1 flex items-center gap-1.5">
+                            <TrendingUp className="w-3.5 h-3.5" />
+                            All India / State Merit Distinction
+                          </div>
+                          <p className="text-amber-100 text-sm md:text-base font-semibold leading-relaxed">
+                            {completedEducations[0].highlight}
+                          </p>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+
+                  {/* Statistics Grid */}
+                  {completedEducations[0].stats && (
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 bg-black/60 rounded-2xl border border-white/10">
+                      {completedEducations[0].stats.map((st) => (
+                        <div key={st.label} className="text-center p-3 rounded-xl bg-white/5 border border-white/5">
+                          <span className="block text-zinc-400 text-[10px] uppercase font-mono tracking-wider mb-1">
+                            {st.label}
+                          </span>
+                          <span className="text-lg md:text-xl font-bold font-mono text-purple-400">{st.value}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
+              </motion.div>
 
-                <div className="p-6 bg-black/60 rounded-2xl border border-purple-500/20 flex items-center justify-between">
+              {/* School Card (5 cols) */}
+              <motion.div
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.8, delay: 0.15 }}
+                className="lg:col-span-5 relative"
+              >
+                <div className="h-full p-8 md:p-10 rounded-3xl border border-pink-500/20 bg-gradient-to-b from-zinc-950/90 via-zinc-900/50 to-black backdrop-blur-xl transition-all duration-500 hover:border-pink-400/50 hover:shadow-[0_0_40px_rgba(236,72,153,0.15)] flex flex-col justify-between">
                   <div>
-                    <span className="block text-zinc-400 text-[10px] font-mono uppercase tracking-widest mb-1">
-                      {educationData[1].scoreLabel}
+                    <div className="flex items-center justify-between mb-6">
+                      <div className="w-14 h-14 rounded-2xl flex items-center justify-center bg-pink-500/10 border border-pink-500/30 text-pink-400 shadow-[0_0_20px_rgba(236,72,153,0.2)]">
+                        <School className="w-8 h-8" />
+                      </div>
+                      <span className="text-pink-400 font-mono text-xs uppercase tracking-widest px-3 py-1 rounded-full bg-pink-500/10 border border-pink-500/20">
+                        ICSE Distinction
+                      </span>
+                    </div>
+
+                    <span className="text-zinc-500 font-mono text-xs uppercase tracking-widest block mb-1">
+                      {completedEducations[1].period}
                     </span>
-                    <span className="text-4xl font-bold font-mono tracking-tight text-purple-400">
-                      {educationData[1].score}
-                    </span>
+                    <h3 className="text-2xl font-bold text-white uppercase tracking-tight mb-2">
+                      {completedEducations[1].institution}
+                    </h3>
+                    <p className="text-pink-300 font-mono text-sm uppercase tracking-wide mb-6">
+                      {completedEducations[1].degree}
+                    </p>
                   </div>
-                  <div className="w-10 h-10 rounded-full bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400">
-                    <CheckCircle2 className="w-5 h-5" />
+
+                  <div className="p-6 bg-black/60 rounded-2xl border border-pink-500/20 flex items-center justify-between">
+                    <div>
+                      <span className="block text-zinc-400 text-[10px] font-mono uppercase tracking-widest mb-1">
+                        {completedEducations[1].scoreLabel}
+                      </span>
+                      <span className="text-4xl font-bold font-mono tracking-tight text-pink-400">
+                        {completedEducations[1].score}
+                      </span>
+                    </div>
+                    <div className="w-10 h-10 rounded-full bg-pink-500/10 border border-pink-500/30 flex items-center justify-center text-pink-400">
+                      <CheckCircle2 className="w-5 h-5" />
+                    </div>
                   </div>
                 </div>
-              </div>
-            </motion.div>
+              </motion.div>
+            </div>
           </div>
         </div>
       </div>
